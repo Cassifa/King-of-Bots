@@ -17,7 +17,7 @@
         <ul class="navbar-nav">
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              lff
+              Cassifa
             </a>
             <ul class="dropdown-menu">
               <li><router-link class="dropdown-item" :to="{name:'user_bot_index'}">我的bot</router-link></li>

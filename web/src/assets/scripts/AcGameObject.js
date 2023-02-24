@@ -7,15 +7,12 @@ export class AcGameObject{
     }
 
     start(){
-
     }
 
     update(){
-
     }
 
     on_destory(){
-
     }
 
     destory(){
