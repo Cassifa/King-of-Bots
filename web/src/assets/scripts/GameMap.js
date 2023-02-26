@@ -12,7 +12,7 @@ export default class GameMap extends AcGameObject{
 
         this.cols=14;//列
         this.rows=13;//行
-        this.inner_walls_count=10;
+        this.inner_walls_count=20;
 
         this.walls=[];
 
