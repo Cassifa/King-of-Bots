@@ -1,5 +1,5 @@
 <template>
-    <content-field>
+    <content-field v-if="show_content">
         <div class="row justify-content-md-center">
             <div class="col-3">
                 <form @submit.prevent="login">
@@ -35,7 +35,19 @@ export default {
         let username=ref('');
         let error_message=ref('');
         let password=ref('');
+        let show_content=ref(false);
 
+        const jwt_token=localStorage.getItem("jwt_token");
+        if(jwt_token){
+            ///调用mutations
+            store.commit("updateToken",jwt_token);
+            store.dispatch("getinfo",{
+                success(){
+                    router.push({name:"home"});
+                }
+            })
+        }
+        show_content.value=true;
         const login=()=>{
             error_message.value="";
             //调用actions函数
@@ -59,6 +71,7 @@ export default {
             username,
             error_message,
             password,
+            show_content,
 
             login,
         }

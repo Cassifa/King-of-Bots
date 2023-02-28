@@ -28,7 +28,7 @@ export default ({
         state.token="";
     }
   },
-  actions: {
+  actions: {//修改state用
     login(contxt,data){
       $.ajax({
         url:"http://127.0.0.1:3000/user/account/token/",
@@ -39,7 +39,9 @@ export default ({
         },
         success(resp){
             if(resp.error_message=="success"){
-                    //commit调用mutations
+              //登錄持久化
+                  localStorage.setItem("jwt_token",resp.token);
+                  //commit调用mutations
                   contxt.commit("updateToken",resp.token);
                   data.success(resp);
             }
@@ -78,6 +80,7 @@ export default ({
     },
     
     logout(contxt){
+      localStorage.removeItem("jwt_token");
         contxt.commit("logout");
     }
   },
