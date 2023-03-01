@@ -31,8 +31,14 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="dd-bot-code" class="form-label">代码</label>
-                                        <textarea v-model="botadd.content" class="form-control" id="dd-bot-code" rows="10" placeholder="请编写bot代码"></textarea>
-                                        <!-- <VAceEditor v-model:value="botadd.content" @init="editorInit" lang="c_cpp" theme="textmate" style="height: 300px" /> -->
+                                        <!-- <textarea v-model="botadd.content" class="form-control" id="dd-bot-code" rows="10" placeholder="请编写bot代码"></textarea> -->
+                                        <VAceEditor
+                                            v-model:value="botadd.content"
+                                            @init="editorInit"
+                                            lang="c_cpp"
+                                            theme="textmate"
+                                            style="height: 300px" 
+                                        />
                                     </div>
                                 </form>
                             </div>
@@ -59,7 +65,7 @@
                           </tr>
                         </thead>
                         <tbody class="table-group-divider">
-                          <tr v-for="(bot,index) in bots" :key="bot.id">
+                          <tr v-for="(bot,index)  in bots" :key="bot.id">
                             <td>{{ index+1 }}</td>
                             <td>{{ bot.title }}</td>
                             <td>{{bot.createtime}}</td>
@@ -86,14 +92,20 @@
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="dd-bot-code" class="form-label">代码</label>
-                                                    <textarea v-model="bot.content" class="form-control" id="dd-bot-code" rows="10" placeholder="请编写bot代码"></textarea>
-                                                    <!-- <VAceEditor v-model:value="bot.content" @init="editorInit" lang="c_cpp" theme="textmate" style="height: 300px" /> -->
+                                                    <!-- <textarea v-model="bot.content" class="form-control" id="dd-bot-code" rows="10" placeholder="请编写bot代码"></textarea> -->
+                                                    <VAceEditor
+                                                        v-model:value="bot.content"
+                                                        @init="editorInit"
+                                                        lang="c_cpp"
+                                                        theme="textmate"
+                                                        style="height: 300px"
+                                                    />
                                                 </div>
                                             </form>
                                         </div>
                                         <div class="modal-footer">
                                             <div class="error_message">{{ bot.error_message}}</div>
-                                            <button type="button" class="btn btn-primary col-2" @click="update_bot(bot)">确认</button>
+                                            <button type="button" class="btn btn-primary col-2" @click="update_bot(bot)">确认修改</button>
                                             <button type="button" class="btn btn-secondary col-2" data-bs-dismiss="modal" @click="refresh_bots">关闭</button>
                                         </div>
                                     </div>
@@ -119,20 +131,36 @@ import { useStore } from 'vuex';
 import {ref,reactive} from 'vue';
 import {Modal} from 'bootstrap/dist/js/bootstrap';
 //Model API
-// import { VAceEditor } from 'vue3-ace-editor';
-// import ace from 'ace-builds';
+import { VAceEditor } from 'vue3-ace-editor';
+import ace from 'ace-builds';
 //代码编辑区
-
+// require("ace-builds/src-noconflict/ext-language_tools");
+// require("ace-builds/src-noconflict/snippets/sql");
+// require("ace-builds/src-noconflict/snippets/c_cpp");
+// require("ace-builds/src-noconflict/snippets/java");
+// // require("ace-builds/src-noconflict/mode-sql");
+// require("ace-builds/src-noconflict/mode-c_cpp");
+// require("ace-builds/src-noconflict/mode-java");
+// //require("ace-builds/src-noconflict/theme-monokai");
+// require("ace-builds/src-noconflict/mode-html");
+// require("ace-builds/src-noconflict/mode-html_elixir");
+// require("ace-builds/src-noconflict/mode-html_ruby");
+// require("ace-builds/src-noconflict/mode-javascript");
+// require("ace-builds/src-noconflict/mode-python");
+// require("ace-builds/src-noconflict/snippets/less");
+// //require("ace-builds/src-noconflict/theme-chrome");
+// require("ace-builds/src-noconflict/ext-static_highlight");
+// require("ace-builds/src-noconflict/ext-beautify");
 export default({
       name:"UserBotIndexView",
 
       components:{
           ContentField,
-        //   VAceEditor,
+          VAceEditor,
       },
 
       setup() {
-        // ace.config.set("basePath","https://cdn.jsdelivr.net/npm/ace-builds@" + require('ace-builds').version + "/src-noconflict/")
+        ace.config.set("basePath","https://cdn.jsdelivr.net/npm/ace-builds@" + require('ace-builds').version + "/src-noconflict/")
 
         const store=useStore();
         let bots=ref([]);
@@ -205,9 +233,10 @@ export default({
         const update_bot=(bot)=>{
             bot.error_message="";
                 $.ajax({
-                    url:"http://127.0.0.1:3000/user/bot/add/",
+                    url:"http://127.0.0.1:3000/user/bot/update/",
                     type:"post",
                     data:{
+                        bot_id:bot.id,
                         title:bot.title,
                         description:bot.description,
                         content:bot.content,
@@ -216,15 +245,17 @@ export default({
                         Authorization:"Bearer "+store.state.user.token,
                     },
                     success(resp){
-                        if(resp.error_message==="success"){
+                        if(resp.error_message==="更新成功"){
                             refresh_bots();
                             Modal.getInstance("#add-bot"+bot.id).hide();
                         }
                         else bot.error_message=resp.error_message;
                     },
+                    error(resp){
+                        console.log(resp);
+                    }
                 });
         }
-
         return{
             bots,
             botadd,
