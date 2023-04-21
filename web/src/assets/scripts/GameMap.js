@@ -3,16 +3,16 @@ import Snake from "./Snake";
 import { Wall } from "./Wall";
 
 export default class GameMap extends AcGameObject{
-    constructor(ctx,parent){
+    constructor(ctx,parent,store){
         super();
 
         this.ctx=ctx;
         this.parent=parent;
         this.L=0;
 
+        this.store=store;
         this.cols=14;//列
         this.rows=13;//行
-        this.inner_walls_count=20;
 
         this.walls=[];
 
@@ -34,55 +34,11 @@ export default class GameMap extends AcGameObject{
         
     }
 
-
-    is_connected(x,y,g){
-        if(x==1&&y==this.cols-2)return true;
-        let dx=[0,0,1,-1],dy=[1,-1,0,0];
-        for(let i=0;i<4;i++){
-            let a=x+dx[i],b=y+dy[i];
-            if(g[a][b])continue;
-            g[a][b]=true;
-            if(this.is_connected(a,b,g))return true;
-        }
-        return false;
-    }
-
     creat_walls(){
-            const g=[];
-            let copy_g=[];
-            do{
-                for(let r=0;r<this.rows;r++){
-                    g[r]=[];
-                    for(let c=0;c<this.cols;c++)
-                        g[r][c]=false;
-                }
-    
-                //四周墙
-                for(let r=0;r<this.rows;r++)
-                    g[r][0]=g[r][this.cols-1]=true;
-    
-                for(let c=0;c<this.cols;c++)
-                    g[0][c]=g[this.rows-1][c]=true;
-
-                //内部障碍物
-                for(let i=0;i<this.inner_walls_count;i+=4){
-                    for(let j=0;j<1001;j++){
-                        let r=parseInt(Math.random()*this.rows);
-                        let c=parseInt(Math.random()*this.cols);
-                        if(g[r][c]||g[this.rows-r-1][this.cols-c-1]||g[this.rows-r-1][c]||g[r][this.cols-c-1])continue;
-                        if((r==this.rows-2&&c==1)||(r==1&&c==this.cols-2))continue;
-                        g[r][c]=g[this.rows-r-1][this.cols-c-1]=g[this.rows-r-1][c]=g[r][this.cols-c-1]=true;
-                        break;
-                    }
-                }
-                //复制数组
-                copy_g=JSON.parse(JSON.stringify(g));
-            }
-            while(!this.is_connected(this.rows-2,1,copy_g));
-            
+            const g=this.store.state.pk.gamemap;
             for(let r=0;r<this.rows;r++)
                 for(let c=0;c<this.cols;c++)
-                    if(g[r][c])this.walls.push(new Wall(r,c,this));
+                    if(g[r][c]==1)this.walls.push(new Wall(r,c,this));
         }
 
     add_listening_events(){

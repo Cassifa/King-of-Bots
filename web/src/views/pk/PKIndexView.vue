@@ -18,6 +18,7 @@ export default({
     },
     setup(){
         const store=useStore();
+        //当前用户websocket链接
         const socketUrl=`ws://127.0.0.1:3000/websocket/${store.state.user.token}/`;
 
         let socket=null;
@@ -29,12 +30,24 @@ export default({
             socket=new WebSocket(socketUrl);
 
             socket.onopen=()=>{
+                //建立websocket连接
                 console.log("connected");
+                store.commit("updateSocket",socket);
             }
 
             socket.onmessage=msg=>{
                 const data=JSON.parse(msg.data);
-                console.log(data);
+                if(data.event==="start-matching"){//匹配成功
+                    store.commit("updateOpponent",{
+                        username:data.opponent_username,
+                        photo:data.opponent_photo,
+                    });
+
+                    store.commit("updateGamemap",data.gamemap);
+                    setTimeout(()=>{
+                        store.commit("updateStatus","playing");
+                    },500);
+                }
             }
 
             socket.onclose=()=>{

@@ -9,6 +9,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/pk/")
 public class BotinfoController {
+    //负责请求转发，接受页面过来的参数，传给Service处理，接到返回值，再传给页面
     @RequestMapping("getbotinfo/")
     public Map<String,String> getBotInfo(){
         Map<String,String> map = new HashMap<>();

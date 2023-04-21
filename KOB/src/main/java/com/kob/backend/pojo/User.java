@@ -7,9 +7,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
+@NoArgsConstructor//无参构造函数
 @AllArgsConstructor
 public class User {
+    //表映射成class
     @TableId(type = IdType.AUTO)
     private Integer id;
     private String username;

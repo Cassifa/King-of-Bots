@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
+    //根据username查询user
     @Autowired
     private UserMapper userMapper;
     @Override

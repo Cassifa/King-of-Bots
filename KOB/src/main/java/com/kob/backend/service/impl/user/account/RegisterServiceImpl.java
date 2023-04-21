@@ -50,8 +50,10 @@ public class RegisterServiceImpl implements RegisterService {
             map.put("error_message","密码不同");
             return map;
         }
+
         QueryWrapper<User> queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("username",username);
+
         List<User> users=userMapper.selectList(queryWrapper);
         if(!users.isEmpty()){
             map.put("error_message","用户名已存在");

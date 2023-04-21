@@ -10,7 +10,7 @@
                     <div class="user-username"> {{$store.state.pk.opponent_username}} </div>
             </div>
             <div class="col-12 buttonc">
-                <button type="button" class="btn btn-warning btn-lg">开始匹配</button>
+                <button @click="click_match_btn" type="button" class="btn btn-warning btn-lg col-2">{{match_btn_info}}</button>
             </div>
         </div>
     </div>
@@ -18,9 +18,38 @@
 
 
 <script>
+import { ref } from 'vue';
+import { useStore } from 'vuex';
+
 export default{
     name:"MatchGround",
     components:{
+    },
+
+    setup() {
+        const store=useStore();
+        let match_btn_info=ref("开始匹配");
+        const click_match_btn=()=>{
+            if(match_btn_info.value=="开始匹配"){
+                match_btn_info.value="取消匹配";
+                store.state.pk.socket.send(JSON.stringify({
+                    event:"start-matching",
+                }))
+            } 
+            else{
+                match_btn_info.value="开始匹配";
+                store.state.pk.socket.send(JSON.stringify({
+                    event:"stop-matching",
+
+                }))
+            }
+        } 
+
+
+        return{
+            match_btn_info,
+            click_match_btn,
+        }
     }
 }
 </script>
