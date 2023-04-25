@@ -24,10 +24,10 @@ public class MatchingPool extends Thread{
     private final static String startGameUrl=
             "http://127.0.0.1:3000/pk/start/game/";
 
-    public void addPlayer(Integer userId,Integer rating){
+    public void addPlayer(Integer userId,Integer rating,Integer botId){
         lock.lock();
         try {
-            players.add(new Player(userId,rating,0));
+            players.add(new Player(userId,rating,0,botId));
         }finally {
             lock.unlock();
         }
@@ -63,6 +63,8 @@ public class MatchingPool extends Thread{
     private void sendResult(Player a,Player b){
         MultiValueMap<String,String> data=new LinkedMultiValueMap<>();
         System.out.println(a+" 与 "+b+" 匹配了");
+        data.add("a_bot_id",a.getBotId().toString());
+        data.add("b_bot_id",b.getBotId().toString());
         data.add("a_id",a.getUserId().toString());
         data.add("b_id",b.getUserId().toString());//反射函数
         restTemplate.postForObject(startGameUrl,data,String.class);

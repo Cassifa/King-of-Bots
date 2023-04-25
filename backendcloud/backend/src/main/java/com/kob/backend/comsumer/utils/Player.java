@@ -12,6 +12,8 @@ import java.util.List;
 @NoArgsConstructor
 public class Player {
     private Integer id,sx,sy;
+    private Integer botId;
+    private String botCode;//-1人工
     private List<Integer> steps;
 
     private  boolean check_tail_increasing(int step){//检验是否增长
