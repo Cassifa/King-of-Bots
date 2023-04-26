@@ -22,6 +22,7 @@ export default({
     },
     setup(){
         const store=useStore();
+        store.commit("updateLoser","none");
         //当前用户websocket链接
         const socketUrl=`ws://127.0.0.1:3000/websocket/${store.state.user.token}/`;
 
@@ -50,7 +51,7 @@ export default({
                     store.commit("updateGame",data.game);
                     setTimeout(()=>{
                         store.commit("updateStatus","playing");
-                    },500);
+                    },200);
                 }
                 else if(data.event==="move"){
                     console.log(data);

@@ -22,7 +22,7 @@ public class Game extends Thread{
     private int[][] cpg;
     private final Player playerA,playerB;
     private Integer nextStepA=null,nextStepB=null;
-    private String status="playing";//playing finshed
+    private String status="playing";//playing finished
     private String loser="";//a,b,all
     private final ReentrantLock lock=new ReentrantLock();
     private final static String addBotUrl=
@@ -103,7 +103,6 @@ public class Game extends Thread{
         for(int i=0;i<rows;i++)
                 for(int j=0;j<cols;j++)
                         cpg[i][j]=g[i][j];
-
         if(is_connected(this.rows-2,1)){
             return true;
         }

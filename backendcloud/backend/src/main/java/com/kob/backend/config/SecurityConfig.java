@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 //对于登录接口允许匿名访问
                 .antMatchers("/user/account/token/", "/user/account/register/").permitAll()
-                .antMatchers("/pk/start/game/").hasIpAddress("127.0.0.1")
+                .antMatchers("/pk/start/game/","/pk/receive/bot/move/").hasIpAddress("127.0.0.1")
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 //除上面的需要鉴权认证
                 .anyRequest().authenticated();
