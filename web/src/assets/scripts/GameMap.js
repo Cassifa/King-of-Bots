@@ -42,20 +42,46 @@ export default class GameMap extends AcGameObject{
         }
 
     add_listening_events(){
-        this.ctx.canvas.focus();
-        this.ctx.canvas.addEventListener("keydown",e=>{
-            let d=-1;
-            if(e.key==='w')d=0;
-            if(e.key==='s')d=2;
-            if(e.key==='a')d=3;
-            if(e.key==='d')d=1;
-            if(d!=-1){
-                this.store.state.pk.socket.send(JSON.stringify({
-                    event:"move",
-                    direction:d,
-                }));
-            }
-        });
+        //如果是回放
+        if(this.store.state.record.is_record){
+            let k=0;
+            const [snake0,snake1]= this.snakes;
+            const loser=this.store.state.record.record_loser;
+            const a_step=this.store.state.record.a_step;
+            const b_step=this.store.state.record.b_step;
+            //每300ms执行
+            const interval_id=setInterval(()=>{
+                if(k>=a_step.length-1){
+                    if(loser==="all"||loser==="a")
+                        snake0.status="die";
+                    if(loser==="all"||loser==="b")
+                        snake1.status="die";
+                    clearInterval(interval_id);
+                    
+                }else{
+                    snake0.set_direction(parseInt(a_step[k]));
+                    snake1.set_direction(parseInt(b_step[k]));
+                    k++;
+                }
+
+            },350)//一秒3步
+        }else{
+            this.ctx.canvas.focus();
+            this.ctx.canvas.addEventListener("keydown",e=>{
+                let d=-1;
+                if(e.key==='w')d=0;
+                if(e.key==='s')d=2;
+                if(e.key==='a')d=3;
+                if(e.key==='d')d=1;
+                if(d!=-1){
+                    this.store.state.pk.socket.send(JSON.stringify({
+                        event:"move",
+                        direction:d,
+                    }));
+                }
+            });
+        }
+
     }
 
     start(){

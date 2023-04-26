@@ -3,6 +3,7 @@ import NotFound from "../views/error/NotFound";
 import PKIndexView from "../views/pk/PKIndexView";
 import RanklistIndexView from "../views/ranklist/RanklistIndexView";
 import RecordIndexView from "../views/record/RecordIndexView";
+import RecordContendView from "../views/record/RecordContendView";
 import UserBotIndexView from "../views/user/bot/UserBotIndexView";
 import UserAccountLoginView from "../views/user/account/UserAccountLoginView";
 import UserAccountRegisterView from "../views/user/account/UserAccountRegisterView";
@@ -37,6 +38,14 @@ const routes = [
     path:"/record/",
     name:"record_index",
     component:RecordIndexView,
+    meta:{
+      requestAuth:true,
+    }
+  },
+  {//路由加参
+    path:"/record/:recordId/",
+    name:"record_content",
+    component:RecordContendView,
     meta:{
       requestAuth:true,
     }

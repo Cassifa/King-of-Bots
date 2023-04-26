@@ -31,7 +31,7 @@ public class WebSocketServer {
     private User user;
 
     //非单例模式
-    private static UserMapper userMapper;
+    public static UserMapper userMapper;
     private static BotMapper botMapper;
     public static RecordMapper recordMapper;
 

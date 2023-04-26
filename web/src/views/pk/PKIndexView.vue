@@ -23,6 +23,7 @@ export default({
     setup(){
         const store=useStore();
         store.commit("updateLoser","none");
+        store.commit("updateIsRecord",true);
         //当前用户websocket链接
         const socketUrl=`ws://127.0.0.1:3000/websocket/${store.state.user.token}/`;
 
@@ -61,7 +62,6 @@ export default({
                     s1.set_direction(data.b_direction);
                 }
                 else if(data.event==="result"){
-                    console.log(data);
                     const game=store.state.pk.gameObject;
 
                     const [s0,s1]=game.snakes;

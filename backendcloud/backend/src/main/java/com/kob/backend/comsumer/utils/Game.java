@@ -4,6 +4,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.kob.backend.comsumer.WebSocketServer;
 import com.kob.backend.pojo.Bot;
 import com.kob.backend.pojo.Record;
+import com.kob.backend.pojo.User;
 import org.springframework.security.core.parameters.P;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -127,6 +128,7 @@ public class Game extends Thread{
     }
 
     private String getInput(Player player){//局面转为字符串
+
         //地图#me_sx#me_sy#me_操作#you_sx#you_sy#对手操作
         Player me,you;
         if(playerA.getId().equals(player.getId())){
@@ -237,7 +239,24 @@ public class Game extends Thread{
                         ans.append(g[i][j]);
         return ans.toString();
     }
+    private void updateUserRating(Player player,Integer rating){
+        User user=WebSocketServer.userMapper.selectById(player.getId());
+        user.setRating(rating);
+        WebSocketServer.userMapper.updateById(user);
+    }
     private void saveToDataBase(){
+        Integer ratingA=WebSocketServer.userMapper.selectById(playerA.getId()).getRating();
+        Integer ratingB=WebSocketServer.userMapper.selectById(playerB.getId()).getRating();
+
+        if("a".equals(loser)){
+            ratingA-=2;
+            ratingB+=5;
+        }else if("b".equals(loser)){
+            ratingA-=2;
+            ratingB+=5;
+        }
+        updateUserRating(playerA,ratingA);
+        updateUserRating(playerB,ratingB);
         Record record=new Record(
                 null,
                 playerA.getId(),
