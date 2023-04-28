@@ -2,7 +2,11 @@
     <PlayGround v-if="$store.state.pk.status==='playing'"></PlayGround>
     <MatchGround v-if="$store.state.pk.status==='matching'"></MatchGround>
     <ResultBoard v-if="$store.state.pk.loser!='none'"></ResultBoard>
-    <!-- <ResultBoard>  </ResultBoard> -->
+    <div v-if="$store.state.pk.status==='playing'">
+        <div class="user-color" v-if="$store.state.user.id==$store.state.pk.a_id">左下</div>
+        <div class="user-color" v-else>右上</div>
+    </div>
+
     
 </template>
 
@@ -55,7 +59,6 @@ export default({
                     },200);
                 }
                 else if(data.event==="move"){
-                    console.log(data);
                     const game=store.state.pk.gameObject;
                     const [s0,s1]=game.snakes;
                     s0.set_direction(data.a_direction);
@@ -87,4 +90,10 @@ export default({
 </script>
 
 <style scoped>
+div.user-color{
+    text-align: center;
+    color:aquamarine;
+    font-size: 30px;
+    font-weight: bold;
+}
 </style>

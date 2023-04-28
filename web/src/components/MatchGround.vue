@@ -23,7 +23,7 @@
             </div>
 
             <div class="col-12 buttonc">
-                <button @click="click_match_btn" type="button" class="btn btn-warning btn-lg col-2">{{match_btn_info}}</button>
+                <button @click="click_match_btn" type="button" class="btn btn-warning btn-lg">{{match_btn_info}}</button>
             </div>
         </div>
 
@@ -96,31 +96,31 @@ export default{
 <style scoped>
 .matchground{
     width: 60vw;
-    height: 70vh;
+    height: 70vmin;
     margin: 20px auto;
     background-color: rgb(50,50,50,0.5);
 }
 div.user-photo{
     text-align: center;
-    padding-top: 10vh;
+    padding-top: 10vmin;
 }
 div.user-photo>img{
     border-radius: 50%;
-    width: 20vh;
+    width: 20vmin;
 }
 div.user-username{
     text-align: center;
     font-size: 24px;
     font-weight: 600;
     color: white;
-    padding-top: 2vh;
+    padding-top: 2vmin;
 }
 .buttonc{
     text-align: center;
-    padding-top: 15vh;
+    padding-top: 15vmin;
 }
 .user-select-bot{
-    padding-top: 20vh;
+    padding-top: 20vmin;
 }
 .user-select-bot>select{
     width: 60%;
@@ -129,5 +129,8 @@ div.user-username{
 .user-select-bot option{
     font-style: italic;
     text-align: center;
+}
+button{
+    width: min(40%,20vmax)
 }
 </style>

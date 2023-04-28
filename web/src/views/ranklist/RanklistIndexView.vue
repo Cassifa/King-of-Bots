@@ -14,7 +14,7 @@
                         <thead>
                           <tr style="text-align:center">
                             <th scope="col">#</th>
-                            <th scope="col">A</th>
+                            <th scope="col">Player</th>
                             <th scope="col">Rating</th>
                           </tr>
                         </thead>
@@ -74,7 +74,7 @@ export default({
 
         const updatePages=()=>{//更新当前底部显示页
             let new_pages=ref([]);
-            let max_pages=parseInt(Math.ceil(total_users/3));
+            let max_pages=parseInt(Math.ceil(total_users/10));
             let down=Math.max(1,current_page-2);
             let top=Math.min(max_pages,current_page+2);
             for(let i=down;i<=top;i++){
@@ -87,7 +87,7 @@ export default({
         }
 
         const updateCurrentPage=(num)=>{//更新当前选择页
-            let max_pages=parseInt(Math.ceil(total_users/3));
+            let max_pages=parseInt(Math.ceil(total_users/10));
             if(num===-1)num=Math.max(1,current_page-1);
             if(num===-2)num=Math.min(max_pages,current_page+1);
             current_page=num;

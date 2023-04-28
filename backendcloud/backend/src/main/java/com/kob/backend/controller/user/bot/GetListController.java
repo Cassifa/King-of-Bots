@@ -1,4 +1,4 @@
-package com.kob.backend.controller.bot;
+package com.kob.backend.controller.user.bot;
 
 import com.kob.backend.pojo.Bot;
 import com.kob.backend.service.user.bot.GetListService;
@@ -12,7 +12,7 @@ import java.util.List;
 public class GetListController {
     @Autowired
     private GetListService getListService;
-    @GetMapping("user/bot/getlist/")
+    @GetMapping("/api/user/bot/getlist/")
     public List<Bot> getlist(){
         return getListService.getList();
     }

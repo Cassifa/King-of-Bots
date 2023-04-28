@@ -1,5 +1,5 @@
 <template>
-    <div class="result-board">
+    <div class="result-board" style="text-align: center">
         <div class="result-board-text" v-if="$store.state.pk.loser==='all'">
             Draw
         </div>
@@ -42,24 +42,28 @@ export default {
 </script>
 
 <style scoped>
-div.result-board{
-    height: 30vh;
-    width: 40vh;
+div.result-board{/*居中div*/
+    height: 30vmin;
+    width: 40vmin;
     background-color: rgb(50,50,50,0.5);
-    position: absolute;
-    top: 30vh;
-    left: 35vh;
+    margin: 0 auto;
+    position: absolute;/*给大div一个绝对定位*/
+    top: 50%;
+    left: 50%;
+    margin-top: -18vmin;/*往上移动自身高度的一半*/
+    margin-left: -20vmin;/*往左移动自身宽度的一半*/
 }
 div.result-board-text{
     text-align: center;
     color: white;
-    font-size: 50px;
+    font-size: 7vmin;
     font-weight: 600;
     font-style: italic;
-    padding-top: 10vh;
+    padding-top: 8vmin;
 }
 div.result-board-btn{
     text-align: center;
-    padding-top: 5vh;
+    padding-top:2vmin;
+    height: 5vmin;
 }
 </style>

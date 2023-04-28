@@ -1,4 +1,4 @@
-package com.kob.backend.controller.bot;
+package com.kob.backend.controller.user.bot;
 
 import com.kob.backend.service.user.bot.RemoveService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ public class RemoveController {
     @Autowired
     private RemoveService removeService;
 
-    @PostMapping("/user/bot/remove/")
+    @PostMapping("/api/user/bot/remove/")
     public Map<String,String> remove(@RequestParam Map<String,String> data){
         return removeService.remove(data);
     }
