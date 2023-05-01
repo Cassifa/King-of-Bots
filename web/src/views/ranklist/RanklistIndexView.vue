@@ -95,9 +95,9 @@ export default({
         }
 
         const pull_page=page=>{//更新当前展示的对局记录
-            current_page=page;
+            current_page=page;//https://app5356.acapp.acwing.com.cn/ http://127.0.0.1:3000/
             $.ajax({
-                    url:"http://127.0.0.1:3000/ranklist/getlist/",
+                    url:"https://app5356.acapp.acwing.com.cn/api/ranklist/getlist/",
                     type:"get",
                     data:{
                         page,

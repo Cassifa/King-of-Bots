@@ -43,9 +43,9 @@ export default {
       let confirmedPassword=ref('');
 
       const register=()=>{
-          error_message.value="";
+          error_message.value="";//https://app5356.acapp.acwing.com.cn/ http://127.0.0.1:3000/
           $.ajax({
-            url:"http://127.0.0.1:3000/user/account/register/",
+            url:"https://app5356.acapp.acwing.com.cn/api/user/account/register/",
             type:"post",
             data:{
               username:username.value,

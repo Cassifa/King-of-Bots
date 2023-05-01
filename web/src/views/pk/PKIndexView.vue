@@ -27,9 +27,11 @@ export default({
     setup(){
         const store=useStore();
         store.commit("updateLoser","none");
-        store.commit("updateIsRecord",true);
+        store.commit("updateIsRecord",false);
         //当前用户websocket链接
-        const socketUrl=`ws://127.0.0.1:3000/websocket/${store.state.user.token}/`;
+        //wss://app5356.acapp.acwing.com.cn/websocket/${store.state.user.token}/
+        //ws://127.0.0.1:3000/websocket/${store.state.user.token}/
+        const socketUrl=`wss://app5356.acapp.acwing.com.cn/websocket/${store.state.user.token}/`;
 
         let socket=null;
         onMounted(()=>{
@@ -41,7 +43,7 @@ export default({
 
             socket.onopen=()=>{
                 //建立websocket连接
-                console.log("connected");
+                console.log("websocket connected");
                 store.commit("updateSocket",socket);
             }
 
@@ -77,7 +79,7 @@ export default({
             }
 
             socket.onclose=()=>{
-                console.log("disconected");
+                console.log("websocket disconected");
             }
         });
 

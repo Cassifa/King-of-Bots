@@ -29,9 +29,9 @@ export default ({
     }
   },
   actions: {//修改state用
-    login(contxt,data){
+    login(contxt,data){// https://app5356.acapp.acwing.com.cn/ http://127.0.0.1:3000/
       $.ajax({
-        url:"http://127.0.0.1:3000/user/account/token/",
+        url:"https://app5356.acapp.acwing.com.cn/api/user/account/token/",
         type:"post",
         data: {
           username: data.username,
@@ -55,9 +55,9 @@ export default ({
       });
     },
 
-    getinfo(contxt,data){
+    getinfo(contxt,data){//https://app5356.acapp.acwing.com.cn/ 
       $.ajax({
-        url:"http://127.0.0.1:3000/user/account/info/",
+        url:"https://app5356.acapp.acwing.com.cn/api/user/account/info/",
         type:"get",
         headers:{//取出state属性
           Authorization:"Bearer "+contxt.state.token,

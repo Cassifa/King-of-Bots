@@ -50,10 +50,11 @@ export default{
         const click_match_btn=()=>{
             if(match_btn_info.value=="开始匹配"){
                 match_btn_info.value="取消匹配";
+                // console.log(store.state.pk.socket);
                 store.state.pk.socket.send(JSON.stringify({
                     event:"start-matching",
                     bot_id:select_bot.value,//传输时已是数据库id
-                }))
+                }));
             } 
             else{
                 match_btn_info.value="开始匹配";
@@ -65,9 +66,9 @@ export default{
         }
 
         
-        const refresh_bots=()=>{
+        const refresh_bots=()=>{// https://app5356.acapp.acwing.com.cn/ http://127.0.0.1:3000/
             $.ajax({
-                    url:"http://127.0.0.1:3000/user/bot/getlist/",
+                    url:"https://app5356.acapp.acwing.com.cn/api/user/bot/getlist/",
                     type:"get",
                     data:{
                         userId:store.state.user.id,

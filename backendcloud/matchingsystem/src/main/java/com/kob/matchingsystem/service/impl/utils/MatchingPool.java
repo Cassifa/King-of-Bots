@@ -22,7 +22,7 @@ public class MatchingPool extends Thread{
     }
 
     private final static String startGameUrl=
-            "http://127.0.0.1:3000/pk/start/game/";
+            "http://127.0.0.1:3000/api/pk/start/game/";
 
     public void addPlayer(Integer userId,Integer rating,Integer botId){
         lock.lock();
@@ -67,6 +67,7 @@ public class MatchingPool extends Thread{
         data.add("b_bot_id",b.getBotId().toString());
         data.add("a_id",a.getUserId().toString());
         data.add("b_id",b.getUserId().toString());//反射函数
+        System.out.println(startGameUrl+data);
         restTemplate.postForObject(startGameUrl,data,String.class);
     }
     private void matchPlayers(){

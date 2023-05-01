@@ -46,7 +46,7 @@ public class Game extends Thread{
             botCodeA=botA.getContent();
         }
 
-        if(botA!=null){
+        if(botB!=null){
             botIdB=botB.getId();
             botCodeB=botB.getContent();
         }
@@ -71,9 +71,11 @@ public class Game extends Thread{
 
     //设置next
     public synchronized void setNextStepA(Integer nextStepA){
+        System.out.println("received A next Step");
         this.nextStepA=nextStepA;
     }
     public synchronized void setNextStepB(Integer nextStepB){
+        System.out.println("received B next Step");
         this.nextStepB=nextStepB;
     }
 

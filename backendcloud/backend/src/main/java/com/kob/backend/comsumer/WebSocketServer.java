@@ -156,6 +156,7 @@ public class WebSocketServer {
     public void onMessage(String message, Session session) {
         // 从Client接收消息
         System.out.println("recived");
+        System.out.println(message);
         JSONObject data=JSONObject.parseObject(message);
         String event=data.getString("event");
         if("start-matching".equals(event)){
