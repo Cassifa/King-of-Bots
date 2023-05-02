@@ -31,7 +31,7 @@ export default ({
   actions: {//修改state用
     login(contxt,data){// https://app5356.acapp.acwing.com.cn/ http://127.0.0.1:3000/
       $.ajax({
-        url:"https://app5356.acapp.acwing.com.cn/api/user/account/token/",
+        url:"http://127.0.0.1:3000/api/user/account/token/",
         type:"post",
         data: {
           username: data.username,
@@ -39,7 +39,7 @@ export default ({
         },
         success(resp){
             if(resp.error_message=="success"){
-              //登錄持久化
+                  //登錄持久化
                   localStorage.setItem("jwt_token",resp.token);
                   //commit调用mutations
                   contxt.commit("updateToken",resp.token);
@@ -57,7 +57,7 @@ export default ({
 
     getinfo(contxt,data){//https://app5356.acapp.acwing.com.cn/ 
       $.ajax({
-        url:"https://app5356.acapp.acwing.com.cn/api/user/account/info/",
+        url:"http://127.0.0.1:3000/api/user/account/info/",
         type:"get",
         headers:{//取出state属性
           Authorization:"Bearer "+contxt.state.token,

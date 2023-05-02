@@ -61,9 +61,10 @@ public class RegisterServiceImpl implements RegisterService {
         }
 
         String encodedPassword=passwordEncoder.encode(password);
-        String photo="https://www.acwing.com/activity/content/activity_person/content/236974/1/";
+        String photo="https://oss.aliyuncs.com/aliyun_id_photo_bucket/default_trade.jpg";
         User user=new User(null,username,encodedPassword,1500,photo);
         userMapper.insert(user);
+
         map.put("error_message","注册成功");
         return map;
     }

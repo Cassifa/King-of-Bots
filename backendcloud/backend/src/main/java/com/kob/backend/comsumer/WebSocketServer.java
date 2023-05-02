@@ -62,7 +62,7 @@ public class WebSocketServer {
     public void onOpen(Session session, @PathParam("token") String token) throws IOException {
         // 建立连接
         this.session=session;
-        System.out.println("continted");
+        System.out.println("connected");
         Integer userId= JwtAuthentication.getUserId(token);
         this.user=userMapper.selectById(userId);
 

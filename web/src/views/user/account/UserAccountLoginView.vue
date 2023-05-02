@@ -5,11 +5,11 @@
                 <form @submit.prevent="login">
                     <div class="mb-3">
                         <label for="username" class="form-label">用户名</label>
-                        <input v-model="username" type="text" class="form-control" id="username" placeholder="请输入username">
+                        <input v-model="username" type="text" class="form-control" id="username" placeholder="请输入用户名">
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">密码</label>
-                        <input v-model="password" type="password" class="form-control" id="password" placeholder="请输入password">
+                        <input v-model="password" type="password" class="form-control" id="password" placeholder="请输入密码">
                     </div>
                     <div class="error-message">{{ error_message }}</div>
                     <button  type="submit" class="btn btn-info">提交</button>
@@ -79,11 +79,15 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 button{
     width: 100%;
 }
 .error-message{
     color: red;
+}
+.form-label{
+    font-size: large;
+    font-style: italic;
 }
 </style>

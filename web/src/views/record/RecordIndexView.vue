@@ -3,7 +3,7 @@
         <div class="row">
           <div class="col-3">
             <ContentField>
-                <img :src="$store.state.user.photo" style="width:100%">
+                <img :src="$store.state.user.photo" style="width:100%" class="Myphoto">
             </ContentField>
           </div>
           <div class="col-9">
@@ -110,7 +110,7 @@ export default({
         const pull_page=page=>{//更新当前展示的对局记录
             current_page=page;//https://app5356.acapp.acwing.com.cn/ http://127.0.0.1:3000/
             $.ajax({
-                    url:"https://app5356.acapp.acwing.com.cn/api/record/getlist/",
+                    url:"http://127.0.0.1:3000/api/record/getlist/",
                     type:"get",
                     data:{
                         page,
@@ -190,5 +190,8 @@ export default({
 }
 .record-user-name{
     font-style: italic;
+}
+.Myphoto{
+  border-radius: 10%;
 }
 </style>

@@ -35,6 +35,9 @@ public class GetRecordListServiceImpl implements GetRecordListService {
         for(Record record:records){
             User userA=userMapper.selectById(record.getAId());
             User userB=userMapper.selectById(record.getBId());
+            if(userA==null||userB==null){
+                continue;
+            }
             JSONObject item=new JSONObject();
             item.put("a_photo",userA.getPhoto());
             item.put("a_username",userA.getUsername());

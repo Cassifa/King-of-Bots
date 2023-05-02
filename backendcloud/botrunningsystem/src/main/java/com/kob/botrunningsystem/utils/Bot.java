@@ -1,11 +1,10 @@
 package com.kob.botrunningsystem.utils;
 
+import sun.reflect.generics.tree.Tree;
+
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Bot implements java.util.function.Supplier<Integer>{
 
@@ -65,15 +64,31 @@ public class Bot implements java.util.function.Supplier<Integer>{
     }
 
     public Integer nextMove(int[][] g,List<Cell> aCells,List<Cell> bCells) {
+        //aCells:自己，数组尾为蛇头
+        HashSet<Integer> st=new HashSet<>();
         int[] dx={-1,0,1,0},dy={0,1,0,-1};
         int key=new Random().nextInt(4);
         for(int i=key,t=0;t<4;i=(i+1)%4,t++){
             int x=aCells.get(aCells.size()-1).x+dx[i];
             int y=aCells.get(aCells.size()-1).y+dy[i];
             if(x>=0&&x<13&&y>=0&&y<14&&g[x][y]==0){
-                return i;
+                st.add(i);
             }
         }
+        if(st.size()==0){
+            return 0;
+        }
+        for (Integer direction:st){
+            for(int i=0;i<4;i++){
+                int x=aCells.get(aCells.size()-1).x+dx[i]+dx[direction];
+                int y=aCells.get(aCells.size()-1).y+dy[i]+dy[direction];
+                if(x>=0&&x<13&&y>=0&&y<14&&g[x][y]==0){
+                    return direction;
+                }
+            }
+        }
+        for(int i=0;i<4;i++)
+            if(st.contains(i))return i;
         return 0;
     }
 
