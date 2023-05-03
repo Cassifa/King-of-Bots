@@ -150,7 +150,7 @@ public class Game extends Thread{
     }
     private boolean nextStep(){//等待下次操作
         try{//等待前端动画
-            Thread.sleep(200);
+            Thread.sleep(350);
         }catch (InterruptedException e){
             throw new RuntimeException(e);
         }
@@ -226,7 +226,7 @@ public class Game extends Thread{
         }
     }
 
-    private String getMapString(){
+    private String getMapString(){//获取字符串形地图
         StringBuilder ans=new StringBuilder();
         for(int i=0;i<rows;i++)
                 for(int j=0;j<cols;j++)
@@ -246,7 +246,7 @@ public class Game extends Thread{
             ratingA-=4;
             ratingB+=5;
         }else if("b".equals(loser)){
-            ratingA-=2;
+            ratingA-=4;
             ratingB+=5;
         }
         updateUserRating(playerA,ratingA);

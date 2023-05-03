@@ -68,7 +68,7 @@ export default{
         
         const refresh_bots=()=>{// https://app5356.acapp.acwing.com.cn/ http://127.0.0.1:3000/
             $.ajax({
-                    url:"http://127.0.0.1:3000/api/user/bot/getlist/",
+                    url:"https://app5356.acapp.acwing.com.cn/api/user/bot/getlist/",
                     type:"get",
                     data:{
                         userId:store.state.user.id,
