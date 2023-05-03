@@ -11,16 +11,16 @@ export default ({
   getters: {
   },
   mutations: {
-    updateUser(state,user){
+    updateUser(state,user){//更新登录信息
         state.id=user.id;
         state.username=user.username;
         state.photo=user.photo;
         state.is_login=user.is_login;
     },
-    updateToken(state,token){
+    updateToken(state,token){//更新token
         state.token=token;
     },
-    logout(state){
+    logout(state){//退出
         state.id="";
         state.username="";
         state.photo="";

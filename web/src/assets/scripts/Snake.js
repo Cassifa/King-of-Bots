@@ -44,22 +44,22 @@ export default class Snake extends AcGameObject{
 
     start(){}
 
-    set_direction(d){
+    set_direction(d){//设置移动方向
         this.direacion=d;
     }
 
-    check_tail_increasing(){
+    check_tail_increasing(){//是否变长
         if(this.step<=10)return true;
         if(!((this.step-9)%3))return true;
         return false;
     }
 
-    next_step(){
+    next_step(){//蛇移动
         const d=this.direacion;
         this.eye_direction=d;
         this.next_cell=new Cell(this.cells[0].r+this.dr[d],this.cells[0].c+this.dc[d]);
         this.direacion=-1;
-        this.status="move";
+        this.status="move";//更新移动状态
         this.step++;
 
         const k=this.cells.length;
@@ -83,14 +83,14 @@ export default class Snake extends AcGameObject{
             this.cells[0].x+=move_dis*dx/dis;
             this.cells[0].y+=move_dis*dy/dis;
         }
-        if(!this.check_tail_increasing()){
+        if(!this.check_tail_increasing()){//不增长则尾巴缩短
             const k=this.cells.length;
             const tail=this.cells[k-1], tail_target=this.cells[k-2];
             const tdx=tail_target.x-tail.x;
             const tdy=tail_target.y-tail.y;
             
             if(dis<this.eps){
-                this.cells.pop();
+                this.cells.pop();//尾巴已经重叠，删去
             }
             else{
                 tail.x+=move_dis*tdx/dis;
@@ -100,7 +100,7 @@ export default class Snake extends AcGameObject{
     }
 
     update(){
-        if(this.status==="move"){
+        if(this.status==="move"){//移动
             this.update_move();
         }
         this.render();

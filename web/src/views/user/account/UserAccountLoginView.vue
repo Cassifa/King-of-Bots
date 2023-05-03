@@ -55,7 +55,7 @@ export default {
                 username:username.value,
                 password:password.value,
                 success(){
-                    store.dispatch("getinfo",{
+                    store.dispatch("getinfo",{//登录成功，更新token
                         success(){
                             router.push({name:'home'});
                         },

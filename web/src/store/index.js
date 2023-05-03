@@ -10,7 +10,7 @@ export default createStore({
   },
   mutations: {
   },
-  actions: {
+  actions: {//修改state用
   },
   modules: {
     user:ModuleUser,

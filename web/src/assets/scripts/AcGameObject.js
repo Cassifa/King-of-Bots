@@ -15,7 +15,7 @@ export class AcGameObject{
     on_destory(){
     }
 
-    destory(){
+    destory(){//销毁
         this.on_destory();
         for(let i in AC_GAME_OBJESTS){
             const obj=AC_GAME_OBJESTS[i];
@@ -27,7 +27,7 @@ export class AcGameObject{
     }
 }
 let last_timestamp;
-const step= timestamp =>{
+const step= timestamp =>{//每秒执行60次
     for(let obj of AC_GAME_OBJESTS){
         if(!obj.has_called_start){
             obj.has_called_start=true;

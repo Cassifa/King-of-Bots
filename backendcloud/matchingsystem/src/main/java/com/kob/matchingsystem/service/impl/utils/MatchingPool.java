@@ -79,7 +79,7 @@ public class MatchingPool extends Thread{
                 if (used[j])continue;
                 if(checkMatched(players.get(i),players.get(j))){
                     used[i]=used[j]=true;
-                    sendResult(players.get(i),players.get(j));
+                    sendResult(players.get(i),players.get(j));//回传匹配成功信息
                     break;
                 }
             }
@@ -96,8 +96,8 @@ public class MatchingPool extends Thread{
             try {
                 lock.lock();
                 try {
-                    increaseWaitingTime();
-                    matchPlayers();
+                    increaseWaitingTime();//增加当前匹配池所有人等待时间
+                    matchPlayers();//尝试匹配
                 }finally {
                     lock.unlock();
                 }

@@ -2,6 +2,7 @@
     <div class="container">
         <div class="row">
           <div class="col-3">
+            <!-- 我的头像 -->
             <ContentField class="ContentField">
                 <img :src="$store.state.user.photo" style="width:100%" class="Myphoto">
             </ContentField>

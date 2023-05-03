@@ -1,14 +1,12 @@
 package com.kob.botrunningsystem.utils;
 
-import sun.reflect.generics.tree.Tree;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
 public class Bot implements java.util.function.Supplier<Integer>{
 
-    class Cell{
+    static class  Cell{
         public int x,y;
         public Cell(int x,int y){
             this.x=x;
@@ -26,12 +24,12 @@ public class Bot implements java.util.function.Supplier<Integer>{
         List<Cell> ans=new ArrayList<>();
         int[] dx={-1,0,1,0},dy={0,1,0,-1};
         int x=sx,y=sy,now=0;
-        ans.add(new Cell(x,y));
+        ans.add(new Cell(x, y));
         for(int i=0;i<steps.length();i++){
             int d=steps.charAt(i)-'0';
             x+=dx[d];
             y+=dy[d];
-            ans.add(new Cell(x,y));
+            ans.add(new Cell(x, y));
             if(!check_tail_increasing(++now))
                 ans.remove(0);
         }
@@ -63,33 +61,39 @@ public class Bot implements java.util.function.Supplier<Integer>{
         return nextMove(g ,aCells,bCells);
     }
 
-    public Integer nextMove(int[][] g,List<Cell> aCells,List<Cell> bCells) {
-        //aCells:自己，数组尾为蛇头
-        HashSet<Integer> st=new HashSet<>();
+    private int[][] now_g= new int[13][14];
+    private int eval(int x,int y,int left){//这一步走哪里 剩余搜索长度
+        if(left==0)return 0;//剩余步数用尽
+        if(now_g[x][y]==1)return 0;//不合法
         int[] dx={-1,0,1,0},dy={0,1,0,-1};
-        int key=new Random().nextInt(4);
-        for(int i=key,t=0;t<4;i=(i+1)%4,t++){
+        int ans=0;
+        now_g[x][y]=1;
+        for(int i=0;i<4;i++){
+            int a=x+dx[i],b=y+dy[i];
+            ans=Math.max(ans,eval(a,b,left-1));
+        }
+        now_g[x][y]=0;
+        return ans+1;
+    }
+    public Integer nextMove(int[][] g,List<Cell> aCells,List<Cell> bCells) {
+        for (int i=0;i<13;i++)
+            for(int j=0;j<14;j++)
+                now_g[i][j]=g[i][j];
+        int[] dx={-1,0,1,0},dy={0,1,0,-1};
+        int ans=0,res=0;
+        for(int i=0;i<4;i++){
             int x=aCells.get(aCells.size()-1).x+dx[i];
             int y=aCells.get(aCells.size()-1).y+dy[i];
-            if(x>=0&&x<13&&y>=0&&y<14&&g[x][y]==0){
-                st.add(i);
+            //对当前这步进行估值
+            int t=eval(x,y,7);
+            if(t>res){
+                ans=i;res=t;
+            }
+            else if(t==res&&(aCells.size()&1)==1){
+                ans=i;res=t;
             }
         }
-        if(st.size()==0){
-            return 0;
-        }
-        for (Integer direction:st){
-            for(int i=0;i<4;i++){
-                int x=aCells.get(aCells.size()-1).x+dx[i]+dx[direction];
-                int y=aCells.get(aCells.size()-1).y+dy[i]+dy[direction];
-                if(x>=0&&x<13&&y>=0&&y<14&&g[x][y]==0){
-                    return direction;
-                }
-            }
-        }
-        for(int i=0;i<4;i++)
-            if(st.contains(i))return i;
-        return 0;
+        return ans;
     }
 
 

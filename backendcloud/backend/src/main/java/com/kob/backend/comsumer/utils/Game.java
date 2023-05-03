@@ -5,7 +5,6 @@ import com.kob.backend.comsumer.WebSocketServer;
 import com.kob.backend.pojo.Bot;
 import com.kob.backend.pojo.Record;
 import com.kob.backend.pojo.User;
-import org.springframework.security.core.parameters.P;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
@@ -13,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Game extends Thread{
@@ -102,12 +100,8 @@ public class Game extends Thread{
         }
 
         for(int i=0;i<rows;i++)
-                for(int j=0;j<cols;j++)
-                        cpg[i][j]=g[i][j];
-        if(is_connected(this.rows-2,1)){
-            return true;
-        }
-        return false;
+            System.arraycopy(g[i], 0, cpg[i], 0, cols);
+        return is_connected(this.rows - 2, 1);
     }
     //判断合法
     private  boolean is_connected(int x,int y){
@@ -249,7 +243,7 @@ public class Game extends Thread{
         Integer ratingB=WebSocketServer.userMapper.selectById(playerB.getId()).getRating();
 
         if("a".equals(loser)){
-            ratingA-=2;
+            ratingA-=4;
             ratingB+=5;
         }else if("b".equals(loser)){
             ratingA-=2;

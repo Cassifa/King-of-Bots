@@ -7,6 +7,7 @@ import RecordContendView from "../views/record/RecordContendView";
 import UserBotIndexView from "../views/user/bot/UserBotIndexView";
 import UserAccountLoginView from "../views/user/account/UserAccountLoginView";
 import UserAccountRegisterView from "../views/user/account/UserAccountRegisterView";
+import BoardView from "../views/board/BoardView.vue";
 import store from '../store/index';
 
 const routes = [
@@ -54,6 +55,15 @@ const routes = [
     path:"/user/bot/",
     name:"user_bot_index",
     component:UserBotIndexView,
+    //是否需要登录验证
+    meta:{
+      requestAuth:true,
+    }
+  },
+  {
+    path:"/board/",
+    name:"board",
+    component:BoardView,
     meta:{
       requestAuth:true,
     }

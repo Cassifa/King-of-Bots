@@ -47,18 +47,18 @@ export default class GameMap extends AcGameObject{
             let k=0;
             const [snake0,snake1]= this.snakes;
             const loser=this.store.state.record.record_loser;
-            const a_step=this.store.state.record.a_step;
+            const a_step=this.store.state.record.a_step;//获取操作序列
             const b_step=this.store.state.record.b_step;
             //每300ms执行
             const interval_id=setInterval(()=>{
-                if(k>=a_step.length-1){
+                if(k>=a_step.length-1){//如果有死亡
                     if(loser==="all"||loser==="a")
                         snake0.status="die";
                     if(loser==="all"||loser==="b")
                         snake1.status="die";
                     clearInterval(interval_id);
                     
-                }else{
+                }else{//展示下一步
                     snake0.set_direction(parseInt(a_step[k]));
                     snake1.set_direction(parseInt(b_step[k]));
                     k++;
@@ -66,7 +66,7 @@ export default class GameMap extends AcGameObject{
 
             },350)//一秒3步
         }else{
-            this.ctx.canvas.focus();
+            this.ctx.canvas.focus();//接受输入
             this.ctx.canvas.addEventListener("keydown",e=>{
                 let d=-1;
                 if(e.key==='w')d=0;
@@ -104,17 +104,17 @@ export default class GameMap extends AcGameObject{
         return true;
     }
 
-    next_step(){
+    next_step(){//让每条蛇移动
         for(const snake of this.snakes){
             snake.next_step();
         }
     }
 
-    check_valid(cell){
+    check_valid(cell){//判断移动是否合法
         for(const wall of this.walls){
             if(cell.r===wall.r&&cell.c===wall.c)return false;
         }
-        for(let i of this.snakes){
+        for(let i of this.snakes){//临界情况
             if(!i.check_tail_increasing()&&cell.r===i.cells[i.cells.length-1].r&&cell.c===i.cells[i.cells.length-1].c)return true;
             for(let j of i.cells){
                 if(cell.r===j.r&&cell.c===j.c)return false;
@@ -124,8 +124,8 @@ export default class GameMap extends AcGameObject{
     }
 
     update(){
-        this.update_size();
-        if(this.check_ready()){
+        this.update_size();//更新地图大小
+        if(this.check_ready()){//准备好下一回合就移动
             this.next_step();
         }
         this.rander();

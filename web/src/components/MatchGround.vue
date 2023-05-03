@@ -9,7 +9,7 @@
             
             <div class="col-4">
                 <div class="user-select-bot">
-                    <!-- 双向绑定 -->
+                    <!-- 双向绑定，选择出战斗 -->
                     <select v-model="select_bot" class="form-select" aria-label="Disabled select example">
                         <option value="-1" selected>亲自出马</option>
                         <option v-for="bot in bots" :key="bot.id" :value="bot.id">{{bot.title}}</option>

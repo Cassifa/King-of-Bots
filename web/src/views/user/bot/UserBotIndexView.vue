@@ -170,7 +170,7 @@ export default({
             content:"",
             error_message:"",
         })
-        const refresh_bots=()=>{//http://127.0.0.1:3000
+        const refresh_bots=()=>{//http://127.0.0.1:3000   刷新Bot页面
                                 //https://app5356.acapp.acwing.com.cn/
             $.ajax({
                     url:"http://127.0.0.1:3000/api/user/bot/getlist/",
@@ -202,7 +202,7 @@ export default({
                     },
                     success(resp){
                         if(resp.error_message==="success"){
-                            refresh_bots();
+                            refresh_bots();//成功后刷新Bot页面
                             botadd.title="";
                             botadd.description="";
                             botadd.content="";
