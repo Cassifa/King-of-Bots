@@ -6,7 +6,7 @@
 
 ## 项目介绍
 
-​		**前后端分离项目，前端由vue3搭配Bootstrap编写；后端为基于Maven的SpringCloud项目，由backend, matchingsystem, botrunningsystem 三个微服务组成，并集成了SpringSecurity,WebSocket等服务。比赛为在线对战回合制1v1游戏，玩家可以自定义AI机器人来代替自己出战并赢取天梯积分。支持赛后查看对局录像，并实时公布天梯排名**
+​		**前后端分离项目，前端由vue3搭配Bootstrap编写；后端为基于Maven的SpringCloud项目，由backend, matchingsystem, botrunningsystem 三个微服务组成，并集成了SpringSecurity, WebSocket等服务。比赛为在线对战回合制1v1游戏，玩家可以自定义AI机器人来代替自己出战并赢取天梯积分。支持赛后查看对局录像，并实时公布天梯排名**
 
 ### 效果展示
 
@@ -106,7 +106,7 @@
 
 #### 1.小蛇运动
 
-小蛇由一串联通canvas画出的正方形构成，头尾为圆形，头部有眼睛作标识。继承自游戏基类，每秒刷新60次以达到动画效果。每次移动会向前推进头尾格
+​	小蛇由一串联通canvas画出的正方形构成，头尾为圆形，头部有眼睛作标识。继承自游戏基类，每秒刷新60次以达到动画效果。每次移动会向前推进头尾格
 
 ```javascript
 //游戏基类内函数
@@ -118,7 +118,7 @@ const step= timestamp =>{//每秒执行60次
         }
         else{
             obj.timedelta=timestamp-last_timestamp;
-            obj.update();更新函数
+            obj.update();//更新函数
         }
     }
     last_timestamp=timestamp;
@@ -241,7 +241,7 @@ requestAnimationFrame(step);
 
 #### 3.回放录像
 
-​	回放录像集成在游戏类中，每次游戏会判断当前是回放还是正式赛来选择输入信息源
+​	回放录像集成在游戏类中，每次游戏会判断当前是回放还是正式赛来选择输入信息源,若是回放则解析回放操作序列作为输入
 
 ```js
     add_listening_events(){
@@ -316,8 +316,7 @@ requestAnimationFrame(step);
 
 2. Lev3 AI代码逻辑
 
-   dfs搜所有可行区域，以最远可达块为当前决策估值
-
+   ​	dfs搜所有可行区域，以最远可达块为当前决策估值，每次走估值最高的一步，为减小搜索空间，只会搜7步且不会考虑对方决策
    ```java
        private int[][] now_g= new int[13][14];
        private int eval(int x,int y,int left){//这一步走哪里 剩余搜索长度
@@ -380,7 +379,7 @@ import ace from 'ace-builds';
 
 #### 6.玩家匹配
 
-开匹配池每秒尝试匹配一次所有玩家
+开匹配池每秒尝试匹配一次所有玩家，每个玩家有可最大可容忍天梯分差值，随时间推移最大可容忍差值会逐步扩大
 
 ```java
     private void matchPlayers(){
@@ -389,7 +388,7 @@ import ace from 'ace-builds';
             if(used[i])continue;
             for(int j=i+1;j<players.size();j++){
                 if (used[j])continue;
-                if(checkMatched(players.get(i),players.get(j))){
+                if(checkMatched(players.get(i),players.get(j))){//判断两名玩家是否互相可匹配
                     used[i]=used[j]=true;
                     sendResult(players.get(i),players.get(j));//回传匹配成功信息
                     break;
@@ -424,7 +423,7 @@ import ace from 'ace-builds';
 
 #### 7.持久化登录
 
-玩家登录后为其分配token，存储用户本地，后续验证其token有效性
+​	玩家登录后为其分配token，存储用户本地，后续验证其token有效性
 
 ```javascript
 //前端记录token 函数存在state区
