@@ -24,11 +24,11 @@
                     </li>
 
                     <li class="list-group-item d-flex justify-content-between align-items-start">
-                    <div class="ms-2 me-auto">
-                        <div class="fw-bold">Bot-Lev1</div>
-                        这是一个初级Bot 若下一步存在合法的方案则会根据局面随机输出一个方案
-                        <pre class="white-space: pre">{{Bot1}}</pre>
-                    </div>
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">Bot-Lev3</div>
+                            这是一个较为智能的Bot 会根据局面递归的对接下来的移动进行评估并走出期望存活时间最长的一步 但此Bot不会考虑对手接下来的行动
+                            <pre class="white-space: pre">{{Bot3}}</pre>
+                        </div>
                     <span class="badge bg-primary rounded-pill">1</span>
                     </li>
 
@@ -42,11 +42,11 @@
                     </li>
 
                     <li class="list-group-item d-flex justify-content-between align-items-start">
-                    <div class="ms-2 me-auto">
-                        <div class="fw-bold">Bot-Lev3</div>
-                        这是一个较为智能的Bot 会根据局面递归的对接下来的移动进行评估并走出期望存活时间最长的一步 但此Bot不会考虑对手接下来的行动
-                        <pre class="white-space: pre">{{Bot3}}</pre>
-                    </div>
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">Bot-Lev1</div>
+                            这是一个初级Bot 若下一步存在合法的方案则会根据局面随机输出一个方案
+                            <pre class="white-space: pre">{{Bot1}}</pre>
+                        </div>
                     <span class="badge bg-primary rounded-pill">3</span>
                     </li>
 

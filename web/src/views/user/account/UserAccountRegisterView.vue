@@ -173,7 +173,7 @@ public class Bot implements java.util.function.Supplier<Integer>{
       
         const add_bot=()=>{//添加默认Bot //https://app5356.acapp.acwing.com.cn/ http://127.0.0.1:3000/
                 $.ajax({
-                    url:"https://app5356.acapp.acwing.com.cn/api/user/bot/add/",
+                    url:"http://127.0.0.1:3000/api/user/bot/add/",
                     type:"post",
                     data:{
                         title:"Lev3",
@@ -192,7 +192,7 @@ public class Bot implements java.util.function.Supplier<Integer>{
       const register=()=>{
           error_message.value="";//https://app5356.acapp.acwing.com.cn/ http://127.0.0.1:3000/
           $.ajax({
-            url:"https://app5356.acapp.acwing.com.cn/api/user/account/register/",
+            url:"http://127.0.0.1:3000/api/user/account/register/",
             type:"post",
             data:{
               username:username.value,

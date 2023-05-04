@@ -6,9 +6,10 @@
     <!-- 结果公告栏 -->
     <ResultBoard v-if="$store.state.pk.loser!='none'"></ResultBoard>
     <div v-if="$store.state.pk.status==='playing'">
-        <div class="user-color" v-if="$store.state.user.id==$store.state.pk.a_id">左下</div>
-        <div class="user-color" v-else>右上</div>
+        <div class="user-color" v-if="$store.state.user.id==$store.state.pk.a_id">您的角色初始在左下角</div>
+        <div class="user-color" v-else>您的角色初始在右上角</div>
     </div>
+    <div class="user-color" v-if="$store.state.pk.status==='playing'&&$store.state.pk.select_bot==-1">按AWSD以移动</div>
 
     
 </template>
@@ -34,7 +35,7 @@ export default({
         //当前用户websocket链接
         //wss://app5356.acapp.acwing.com.cn/websocket/${store.state.user.token}/
         //ws://127.0.0.1:3000/websocket/${store.state.user.token}/
-        const socketUrl=`wss://app5356.acapp.acwing.com.cn/websocket/${store.state.user.token}/`;
+        const socketUrl=`ws://127.0.0.1:3000/websocket/${store.state.user.token}/`;
 
         let socket=null;
         onMounted(()=>{//挂载后执行
@@ -88,6 +89,9 @@ export default({
         });
 
         onUnmounted(()=>{
+            store.state.pk.socket.send(JSON.stringify({
+                event:"stop-matching",
+            }))
             socket.close();
         });
     }
@@ -98,7 +102,7 @@ export default({
 <style scoped>
 div.user-color{
     text-align: center;
-    color:aquamarine;
+    color:red;
     font-size: 30px;
     font-weight: bold;
 }

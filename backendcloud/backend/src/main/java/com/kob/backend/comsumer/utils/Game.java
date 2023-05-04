@@ -246,8 +246,8 @@ public class Game extends Thread{
             ratingA-=4;
             ratingB+=5;
         }else if("b".equals(loser)){
-            ratingA-=4;
-            ratingB+=5;
+            ratingA+=5;
+            ratingB-=4;
         }
         updateUserRating(playerA,ratingA);
         updateUserRating(playerB,ratingB);

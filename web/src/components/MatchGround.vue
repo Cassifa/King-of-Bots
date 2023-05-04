@@ -55,20 +55,22 @@ export default{
                     event:"start-matching",
                     bot_id:select_bot.value,//传输时已是数据库id
                 }));
+                refresh_select_bot(select_bot.value);
             } 
             else{
                 match_btn_info.value="开始匹配";
                 store.state.pk.socket.send(JSON.stringify({
                     event:"stop-matching",
-
                 }))
             }
         }
-
+        const refresh_select_bot=(id)=>{
+            store.commit("updateSelectBot",id);
+        }
         
         const refresh_bots=()=>{// https://app5356.acapp.acwing.com.cn/ http://127.0.0.1:3000/
             $.ajax({
-                    url:"https://app5356.acapp.acwing.com.cn/api/user/bot/getlist/",
+                    url:"http://127.0.0.1:3000/api/user/bot/getlist/",
                     type:"get",
                     data:{
                         userId:store.state.user.id,

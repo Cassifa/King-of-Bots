@@ -13,12 +13,16 @@ export default({
     b_sy:0,
     gameObject:null,
     loser:"none",//all a,b
+    select_bot:0,
   },
   getters: {
   },
   mutations: {
     updateSocket(state,socket){
         state.socket=socket;
+    },
+    updateSelectBot(state,select_bot){
+        state.select_bot=select_bot;
     },
     updateOpponent(state,opponent){
         state.opponent_username=opponent.username;
