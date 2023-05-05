@@ -64,7 +64,7 @@ export default class GameMap extends AcGameObject{
                     k++;
                 }
 
-            },350)//一秒3步
+            },350)//一秒10/3步
         }else{
             this.ctx.canvas.focus();//接受输入
             this.ctx.canvas.addEventListener("keydown",e=>{

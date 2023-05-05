@@ -20,9 +20,9 @@
                           </tr>
                         </thead>
                         <tbody class="table-group-divider">
-                          <tr v-for="(user,index) in users" :key="user.id" style="text-align:center">
-                            <td>
-                                {{index+1}}
+                          <tr v-for="user in users" :key="user.id" style="text-align:center">
+                            <td class="rank">
+                                {{user.password}}
                             </td>
                             <td>
                                 <img :src="user.photo" class="user-user-photo">
@@ -138,5 +138,9 @@ export default({
 }
 .Myphoto{
   border-radius: 10%;
+}
+.rank{
+  font-style: italic;
+  font-weight: bold;
 }
 </style>

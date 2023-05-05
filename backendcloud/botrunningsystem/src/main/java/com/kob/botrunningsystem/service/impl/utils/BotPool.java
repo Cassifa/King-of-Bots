@@ -25,7 +25,7 @@ public class BotPool extends Thread{
     private void consume(Bot bot){
         //仅支持java
         Consumer consumer =new Consumer();
-        consumer.startTimeout(2000L,bot);
+        consumer.startTimeout(4000L,bot);//Bot最多等四秒
     }
 
     public void run(){

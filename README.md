@@ -6,7 +6,7 @@
 
 ## 项目介绍
 
-​		**前后端分离项目，前端由vue3搭配Bootstrap编写；后端为基于Maven的SpringCloud项目，由backend, matchingsystem, botrunningsystem 三个微服务组成，并集成了SpringSecurity, WebSocket等服务。比赛为在线对战回合制1v1游戏，玩家可以自定义AI机器人来代替自己出战并赢取天梯积分。支持赛后查看对局录像，并实时公布天梯排名**
+​		**前后端分离项目，前端由vue3搭配Bootstrap编写；后端为基于Maven的SpringCloud项目，由backend, matchingsystem, botrunningsystem 三个微服务组成，并集成了SpringSecurity, WebSocket等服务。比赛为在线对战回合制1v1游戏，玩家操控一条蛇躲避障碍物并设法堵住对方以取得胜利。玩家也可以自定义AI机器人来代替自己出战并赢取天梯积分。支持赛后查看对局录像，并实时公布天梯排名**
 
 ### 效果展示
 

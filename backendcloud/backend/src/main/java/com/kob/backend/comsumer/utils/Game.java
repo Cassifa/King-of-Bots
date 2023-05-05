@@ -16,9 +16,9 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class Game extends Thread{
     private final Integer rows,cols,inner_walls_count;
-    private int[][] g;
+    private final int[][] g;
     final private int[] dx={-1,1,0,0},dy={0,0,1,-1};
-    private int[][] cpg;
+    private final int[][] cpg;
     private final Player playerA,playerB;
     private Integer nextStepA=null,nextStepB=null;
     private String status="playing";//playing finished
@@ -122,7 +122,6 @@ public class Game extends Thread{
     }
 
     private String getInput(Player player){//局面转为字符串
-
         //地图#me_sx#me_sy#me_操作#you_sx#you_sy#对手操作
         Player me,you;
         if(playerA.getId().equals(player.getId())){
@@ -150,7 +149,7 @@ public class Game extends Thread{
     }
     private boolean nextStep(){//等待下次操作
         try{//等待前端动画
-            Thread.sleep(350);
+            Thread.sleep(333);
         }catch (InterruptedException e){
             throw new RuntimeException(e);
         }
@@ -239,6 +238,7 @@ public class Game extends Thread{
         WebSocketServer.userMapper.updateById(user);
     }
     private void saveToDataBase(){
+        if(playerA.getStepsString().length()<5)return;//过滤步数小于五次的对局
         Integer ratingA=WebSocketServer.userMapper.selectById(playerA.getId()).getRating();
         Integer ratingB=WebSocketServer.userMapper.selectById(playerB.getId()).getRating();
 

@@ -6,6 +6,44 @@ import java.util.*;
 
 public class Bot implements java.util.function.Supplier<Integer>{
 
+    private final int[][] now_g= new int[13][14];
+    private int eval(int x,int y,int left){//这一步走哪里 剩余搜索长度
+        if(left==0)return 0;//剩余步数用尽
+        if(now_g[x][y]==1)return 0;//不合法
+        int[] dx={-1,0,1,0},dy={0,1,0,-1};
+        int ans=0;
+        now_g[x][y]=1;
+        for(int i=0;i<4;i++){
+            int a=x+dx[i],b=y+dy[i];
+            ans=Math.max(ans,eval(a,b,left-1));
+        }
+        now_g[x][y]=0;
+        return ans+1;
+    }
+    public Integer nextMove(int[][] g,List<Cell> aCells,List<Cell> bCells) {
+        //不增长下一步会空出
+        if(!check_tail_increasing(bCells.size()))g[bCells.get(0).x][bCells.get(0).y]=0;
+        if(!check_tail_increasing(bCells.size()))g[aCells.get(0).x][aCells.get(0).y]=0;
+        for (int i=0;i<13;i++)
+            System.arraycopy(g[i], 0, now_g[i], 0, 14);
+        int[] dx={-1,0,1,0},dy={0,1,0,-1};
+        int ans=0,res=0;
+        for(int i=0;i<4;i++){
+            int x=aCells.get(aCells.size()-1).x+dx[i];
+            int y=aCells.get(aCells.size()-1).y+dy[i];
+            //对当前这步进行估值
+            int t=eval(x,y,9);//最远搜9步,减小搜索空间
+            if(t>=res){
+                if(res==t){//估值相同随机决定是否转向
+                    int random=(int)(Math.random()*10)&1;
+                    if(random==1)ans=i;
+                }else ans=i;
+                res=t;
+            }
+        }
+        return ans;
+    }
+
     static class  Cell{
         public int x,y;
         public Cell(int x,int y){
@@ -60,43 +98,6 @@ public class Bot implements java.util.function.Supplier<Integer>{
 
         return nextMove(g ,aCells,bCells);
     }
-
-    private int[][] now_g= new int[13][14];
-    private int eval(int x,int y,int left){//这一步走哪里 剩余搜索长度
-        if(left==0)return 0;//剩余步数用尽
-        if(now_g[x][y]==1)return 0;//不合法
-        int[] dx={-1,0,1,0},dy={0,1,0,-1};
-        int ans=0;
-        now_g[x][y]=1;
-        for(int i=0;i<4;i++){
-            int a=x+dx[i],b=y+dy[i];
-            ans=Math.max(ans,eval(a,b,left-1));
-        }
-        now_g[x][y]=0;
-        return ans+1;
-    }
-    public Integer nextMove(int[][] g,List<Cell> aCells,List<Cell> bCells) {
-        for (int i=0;i<13;i++)
-            for(int j=0;j<14;j++)
-                now_g[i][j]=g[i][j];
-        int[] dx={-1,0,1,0},dy={0,1,0,-1};
-        int ans=0,res=0;
-        for(int i=0;i<4;i++){
-            int x=aCells.get(aCells.size()-1).x+dx[i];
-            int y=aCells.get(aCells.size()-1).y+dy[i];
-            //对当前这步进行估值
-            int t=eval(x,y,7);
-            if(t>res){
-                ans=i;res=t;
-            }
-            else if(t==res&&(aCells.size()&1)==1){
-                ans=i;res=t;
-            }
-        }
-        return ans;
-    }
-
-
     @Override
     public Integer get() {
         File file=new File("input.txt");

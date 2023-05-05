@@ -10,7 +10,7 @@ export default class Snake extends AcGameObject{
         this.gamemap=gamemap;
 
         this.cells=[new Cell(info.r,info.c)];//🐍身体 cell0蛇头
-        this.speed=3;//每秒走5格
+        this.speed=3;//每秒走3格
 
         this.next_cell =null;
         //-1 0 1 2 3上右下左 
@@ -50,8 +50,7 @@ export default class Snake extends AcGameObject{
 
     check_tail_increasing(){//是否变长
         if(this.step<=10)return true;
-        if(!((this.step-9)%3))return true;
-        return false;
+        return this.step%3==1;
     }
 
     next_step(){//蛇移动
