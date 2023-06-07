@@ -14,6 +14,7 @@ export default({
     gameObject:null,
     loser:"none",//all a,b
     select_bot:0,
+    placeId:0,//
   },
   getters: {
   },
@@ -45,6 +46,9 @@ export default({
     },
     updateLoser(state,loser){
       state.loser=loser;
+    },
+    updatePlaceId(state,place){
+      state.placeId=place;
     }
   },
   actions: {

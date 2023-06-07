@@ -126,6 +126,9 @@ export default {
         return ans+1;
     }
     public Integer nextMove(int[][] g,List<Cell> aCells,List<Cell> bCells) {
+        //不增长下一步会空出
+        if(!check_tail_increasing(bCells.size()))g[bCells.get(0).x][bCells.get(0).y]=0;
+        if(!check_tail_increasing(bCells.size()))g[aCells.get(0).x][aCells.get(0).y]=0;
         for (int i=0;i<13;i++)
             System.arraycopy(g[i], 0, now_g[i], 0, 14);
         int[] dx={-1,0,1,0},dy={0,1,0,-1};

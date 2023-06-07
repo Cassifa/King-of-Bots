@@ -14,9 +14,9 @@
                         <thead>
                           <tr style="text-align:center">
                             <th scope="col">#</th>
-                            <th scope="col">A</th>
-                            <th scope="col">B</th>
-                            <th scope="col">对战结果</th>
+                            <th scope="col">蓝方</th>
+                            <th scope="col">红方</th>
+                            <th scope="col">Winner</th>
                             <th scope="col">对战时间</th>
                             <th scope="col">操作</th>
                           </tr>
@@ -110,7 +110,7 @@ export default({
         const pull_page=page=>{//更新当前展示的对局记录
             current_page=page;//https://app5356.acapp.acwing.com.cn/ http://127.0.0.1:3000/
             $.ajax({
-                    url:"http://127.0.0.1:3000/api/record/getlist/",
+                    url:"https://app5356.acapp.acwing.com.cn/api/record/getlist/",
                     type:"get",
                     data:{
                         page,

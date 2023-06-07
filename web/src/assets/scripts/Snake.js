@@ -8,7 +8,8 @@ export default class Snake extends AcGameObject{
         this.id=info.id;
         this.color=info.color;
         this.gamemap=gamemap;
-
+        this.r=info.r;
+        this.c=info.c;
         this.cells=[new Cell(info.r,info.c)];//🐍身体 cell0蛇头
         this.speed=3;//每秒走3格
 
@@ -98,7 +99,18 @@ export default class Snake extends AcGameObject{
         }
     }
 
+    updateWallcolor(){
+        for(let t of this.gamemap.walls){
+            if(Math.abs(t.r-this.r)+Math.abs(t.c-this.c)>2)continue;
+            if(t.r!=0&&t.c!=0&&t.c!=this.gamemap.cols-1&&t.r!=this.gamemap.rows-1)continue;
+            t.color=this.color;
+        }
+    }
+
     update(){
+        console.log(this.gamemap.store.state.pk.placeId,this.id);
+        if(!this.gamemap.store.state.record.is_record&&this.gamemap.store.state.pk.placeId==this.id)
+            this.updateWallcolor();
         if(this.status==="move"){//移动
             this.update_move();
         }
