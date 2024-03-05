@@ -80,10 +80,10 @@ export default({
       },
       setup(){
         const store=useStore();
-        let current_page=1;
-        let records=ref([]);
-        let total_records=0;
-        let pages=ref([]);
+        let current_page=1;//当前展示页编号
+        let records=ref([]);//所有对局信息
+        let total_records=0;//总对局数
+        let pages=ref([]);//底部导航栏展示页编号
 
         const updatePages=()=>{//更新当前底部显示页
             let new_pages=ref([]);
@@ -93,7 +93,7 @@ export default({
             for(let i=down;i<=top;i++){
                 new_pages.value.push({
                     num:i,
-                    is_active: i===current_page ? "active" :"",
+                    is_active: i===current_page ? "active" :"",//当前所在页
                 });
             }
             pages.value=new_pages.value;
@@ -110,7 +110,7 @@ export default({
         const pull_page=page=>{//更新当前展示的对局记录
             current_page=page;//https://app5356.acapp.acwing.com.cn/ http://127.0.0.1:3000/
             $.ajax({
-                    url:"https://app5356.acapp.acwing.com.cn/api/record/getlist/",
+                    url:"http://127.0.0.1:3000/api/record/getlist/",
                     type:"get",
                     data:{
                         page,
@@ -128,7 +128,7 @@ export default({
 
         pull_page(current_page);
 
-        const stringTo2D=map=>{
+        const stringTo2D=map=>{//地图转化为一维数组
             let g=[];
             for(let i=0,k=0;i<13;i++){
                 let line=[];
@@ -145,7 +145,10 @@ export default({
             for(const record of records.value){
                 //第一个record为所有数据,第二个为数据库record
                 if(record.record.id===recordId){
-                    store.commit("updateIsRecord",true);
+                console.log("当前展示回放信息:\n");
+                console.log("红蛇操作序列："+record.record.asteps+"\n");
+                console.log("蓝蛇操作序列："+record.record.bsteps+"\n");
+                    store.commit("updateIsRecord",true);//更新是否为录像
                     store.commit("updateGame",{
                         game_map:stringTo2D(record.record.map),
                         a_id:record.record.aid,

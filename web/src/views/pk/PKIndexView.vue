@@ -35,7 +35,7 @@ export default({
         //当前用户websocket链接
         //wss://app5356.acapp.acwing.com.cn/websocket/${store.state.user.token}/
         //ws://127.0.0.1:3000/websocket/${store.state.user.token}/
-        const socketUrl=`wss://app5356.acapp.acwing.com.cn/websocket/${store.state.user.token}`;
+        const socketUrl=`ws://127.0.0.1:3000/websocket/${store.state.user.token}/`;
 
         let socket=null;
         onMounted(()=>{//挂载后执行

@@ -49,7 +49,8 @@ export default class GameMap extends AcGameObject{
             const loser=this.store.state.record.record_loser;
             const a_step=this.store.state.record.a_step;//获取操作序列
             const b_step=this.store.state.record.b_step;
-            //每300ms执行
+            const mp=["上","右","下","左"];
+            //每350ms命令蛇移动
             const interval_id=setInterval(()=>{
                 if(k>=a_step.length-1){//如果有死亡
                     if(loser==="all"||loser==="a")
@@ -61,10 +62,13 @@ export default class GameMap extends AcGameObject{
                 }else{//展示下一步
                     snake0.set_direction(parseInt(a_step[k]));
                     snake1.set_direction(parseInt(b_step[k]));
+                    //红色右上1 蓝色左下0
+                    console.log("当前是第"+(k+1)+"回合：\n");
+                    console.log("红蛇走了："+mp[parseInt(a_step[k])]+", 蓝蛇走了："+mp[parseInt(b_step[k])]+"\n");
                     k++;
                 }
 
-            },350)//一秒10/3步
+            },350)//
         }else{
             this.ctx.canvas.focus();//接受输入
             this.ctx.canvas.addEventListener("keydown",e=>{

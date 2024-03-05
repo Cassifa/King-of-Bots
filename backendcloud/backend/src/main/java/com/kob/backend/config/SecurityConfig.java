@@ -22,12 +22,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
 
     @Bean
+    //将密码明文加密
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
     @Override
+    //
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
@@ -42,10 +44,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 //对于登录接口允许匿名访问
                 .antMatchers("/api/user/account/token/", "/api/user/account/register/").permitAll()
+                //对内部开放
                 .antMatchers("/api/pk/start/game/","/api/pk/receive/bot/move/").hasIpAddress("127.0.0.1")
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 //除上面的需要鉴权认证
                 .anyRequest().authenticated();
+
         http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }
     @Override

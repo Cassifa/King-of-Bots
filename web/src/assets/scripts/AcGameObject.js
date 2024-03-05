@@ -29,13 +29,15 @@ export class AcGameObject{
 let last_timestamp;
 const step= timestamp =>{//每秒执行60次
     for(let obj of AC_GAME_OBJESTS){
+        //如果没有初始化过则初始化
         if(!obj.has_called_start){
             obj.has_called_start=true;
-            obj.start();
+            obj.start();//初始化函数
         }
+        //否则更新
         else{
             obj.timedelta=timestamp-last_timestamp;
-            obj.update();
+            obj.update();//更新函数
         }
     }
     last_timestamp=timestamp;

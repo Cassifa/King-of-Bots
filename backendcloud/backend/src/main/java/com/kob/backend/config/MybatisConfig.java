@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class MybatisConfig {
+    //配置分页功能
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
@@ -15,4 +16,3 @@ public class MybatisConfig {
         return interceptor;
     }
 }
-//配置分页功能

@@ -1,81 +1,222 @@
 # King of Bots:联机在线AI对战游戏
 
-## 概述
+
+
+## 1.概述
 
 ​		**由贪吃蛇游戏改编而来，两名玩家在线联机对战，玩家可以选择指派自己设计的AI参与对战，或亲自出马。同时支持玩家赛后查看比赛回放**
 
-## 项目介绍
 
-​		**前后端分离项目，前端由vue3搭配Bootstrap编写；后端为基于Maven的SpringCloud项目，由backend, matchingsystem, botrunningsystem 三个微服务组成，并集成了SpringSecurity, WebSocket等服务。比赛为在线对战回合制1v1游戏，玩家操控一条蛇躲避障碍物并设法堵住对方以取得胜利。玩家也可以自定义AI机器人来代替自己出战并赢取天梯积分。支持赛后查看对局录像，并实时公布天梯排名**
 
-### 效果展示
+## 2.项目介绍
 
-#### pk页面
+​		**前后端分离项目，前端由vue3搭配Bootstrap编写；后端为基于Maven的SpringCloud项目，由backend, matchingsystem, botrunningsystem 三个微服务组成，并集成了SpringSecurity, WebSocket, JsonWebToken, MyBatisPlus, FastJson, joor-java-8等服务。比赛为在线对战回合制1v1游戏，玩家操控一条蛇躲避障碍物并设法堵住对方以取得胜利。玩家可以上传由java编写的AI来代替自己出战并赢取天梯积分。支持赛后查看对局录像，并实时公布天梯排名。**
+
+
+
+## 3.需求分析
+
+### 	3.1用户需求分析
+
+用户可以登录注册、与其他玩家匹配游戏、查看对局回放列表、查看天梯排行、上传，编辑自己的代码、查看开发人员发布的公告。
+
+![][UserDemandAnalysis]
+
+### 	3.2 代码运行系统需求分析
+
+BotRunningSystem需要相应Backend的调用，实现动态编译执行玩家代码并将结果返还给Backend功能
+
+![][BotRunningSystemDemandAnalysis]
+
+### 	3.3 匹配系统需求分析
+
+MatchingSystem需要相应Backend的调用，将Backend的传递的玩家信息加入匹配池进行匹配并将匹配成功的结果返回Backend
+
+![][MatchingSystemDemandAnalysis]
+
+
+
+## 4.UI界面展示
+
+### 	4.1pk页面
 
 - 匹配页面即主页面
 
-![Image text](https://git.acwing.com/Cassifa/img-folder/-/raw/main/KOB_images/1.jpg)
+![Image text][index]
 
 - 匹配成功
 
-![Image text](https://git.acwing.com/Cassifa/img-folder/-/raw/main/KOB_images/2.jpg)
+![Image text][match]
 
 - 游戏结束
 
-![Image text](https://git.acwing.com/Cassifa/img-folder/-/raw/main/KOB_images/3.jpg)
+![Image text][win]
 
-#### 对局列表
+### 	4.2对局列表
 
-![Image text](https://git.acwing.com/Cassifa/img-folder/-/raw/main/KOB_images/4.jpg)
+![Image text][gameList]
 
-#### 排行榜
+### 	4.3排行榜
 
-![Image text](https://git.acwing.com/Cassifa/img-folder/-/raw/main/KOB_images/5.jpg)
+![Image text][rankList]
 
-#### 我的Bot
+### 	4.4我的Bot
 
 - Bot列表
 
-![Image text](https://git.acwing.com/Cassifa/img-folder/-/raw/main/KOB_images/6.jpg)
+![Image text][botList]
 
 - 编辑Bot
 
-![Image text](https://git.acwing.com/Cassifa/img-folder/-/raw/main/KOB_images/7.jpg)
+![Image text][editBot]
 
-#### 公告板
+### 	4.5公告板
 
-![Image text](https://git.acwing.com/Cassifa/img-folder/-/raw/main/KOB_images/8.jpg)
+![Image text][board]
 
-#### 登录注册
+### 	4.6登录注册
 
-![Image text](https://git.acwing.com/Cassifa/img-folder/-/raw/main/KOB_images/9.jpg)
-
-### 后端逻辑结构
-
-​	玩家选择出战Bot并开始匹配后Backend会接受玩家匹配请求，建立WebSocket连接并向MatchingSystem发送玩家信息。MatchingSystem 会维护匹配池并每秒匹配一次所有玩家，匹配成功后向Backend发送匹配结果。Backend接收到匹配结果后为两位玩家开辟一个Game线程，线程内维护一局游戏所有信息。Game首先创建一张地图并发送给玩家，然后不断接受玩家或BotRunningSystem的输入并判断输入合法性，直至至少一名玩家有不合法操作为止。检测到不合法操作会向玩家公布比赛结果，结束线程并中断WebSocket连接。
-
-![Image text](https://git.acwing.com/Cassifa/img-folder/-/raw/main/KOB_images/10.jpg)
+![Image text][login]
 
 
 
-### 文件结构
+
+
+## 5.后端逻辑泳道图
+
+​		玩家选择出战Bot并开始匹配后Backend会接受玩家匹配请求，建立WebSocket连接并向MatchingSystem发送玩家信息。MatchingSystem 会维护匹配池并每秒匹配一次所有玩家，匹配成功后向Backend发送匹配结果。Backend接收到匹配结果后为两位玩家开辟一个Game线程，线程内维护一局游戏所有信息。Game首先创建一张地图并发送给玩家，然后不断接受玩家或BotRunningSystem的输入并判断输入合法性，直至至少一名玩家有不合法操作为止。检测到不合法操作会向玩家公布比赛结果，结束线程并中断WebSocket连接。
+
+![Image text][process1]
+
+## 6.数据库设计
+
+### 6.1数据库结构
+
+1. User表
+
+   | 列名     | 元素类型      | 备注                 |
+   | -------- | ------------- | -------------------- |
+   | id       | int           | 用户id               |
+   | username | varchar(100)  | 用户名               |
+   | password | varchar(100)  | 用户密码，密文       |
+   | photo    | varchar(1000) | 用户头像             |
+   | rating   | int           | 用户天梯分，默认1500 |
+
+   
+
+2. Record表
+
+   | 列名        | 元素类型      | 备注           |
+   | ----------- | ------------- | -------------- |
+   | id          | int           | 对局编号       |
+   | a_id        | int           | a玩家id        |
+   | a_sx        | int           | a玩家起始x坐标 |
+   | a_sy        | int           | a玩家起始y坐标 |
+   | b_id        | int           | b玩家id        |
+   | b_sx        | int           | b玩家起始x坐标 |
+   | b_sy        | int           | b玩家起始y坐标 |
+   | a_steps     | varchar(1000) | a玩家操作序列  |
+   | b_steps     | varchar(1000) | b玩家操作序列  |
+   | map         | varchar(1000) | 游戏地图       |
+   | loser       | varchar(20)   | 败者           |
+   | create_time | datetime      | 对局时间       |
+
+   
+
+3. Bot表
+
+   | 列名        | 元素类型       | 备注         |
+   | ----------- | -------------- | ------------ |
+   | id          | int            | Bot id       |
+   | user_id     | int            | 拥有者id     |
+   | title       | varchar(100)   | Bot标题      |
+   | description | varchar(300)   | Bot描述      |
+   | content     | varchar(10000) | Bot内容      |
+   | createtime  | datetime       | 创建时间     |
+   | modifytime  | datetime       | 最后修改时间 |
+
+   
+
+### 6.2 ER图
+
+**ER图**
+
+![][ER]
+
+**数据间关系**
+
+![][dataRel]
+
+### 6.3数据流图
+
+**顶层图**
+
+![][dataFlowDiagramtop]
+
+
+
+**0层图**
+
+![][dataFlowDiagram0]
+
+
+
+## 7.文件结构
 
 以下不展示.gitignore中文件
 
 1. bakendcloud 后端微服务管理
   - backend 主服务后端
     - comsumer 基于websocket，通过与前端、matchingsystem、botrunningsystem通信维护当前游戏进程
-    - config 配置SpringSecurity JWT验证  微服务间通讯等
+    
+      - utils 
+        - Game.java 游戏地图类
+        - Cell.java 小蛇身体的一格
+        - Player.java 一局游戏中玩家小蛇状态
+        - JwtAuthentication.java 根据玩家token寻找当前玩家ID
+      - WebSocketServer.java 用于维护玩家开始匹配后与服务器的全双工连接
+    
+    - config 配置SpringSecurity JWT验证  MyBatis RestTemplate等功能模块
+    
     - controller 接受用户调度
+    
+      - pk 用户开启游戏，发送小蛇移动申请接口
+      - ranklist 获取排行榜接口
+      - record 获取对局列表接口
+      - user
+        - account 用户登录，注册，获取信息接口
+        - bot 用户添加，删除，修改自己的Bot接口
+    
     - service 业务实现
+    
     - mapper 操纵数据库
-    - pojo 将数据库Bot Record User映射
+    
+    - pojo 将Bot Record User三个数据库映射
+    
     - utils 全局工具类
-      - JwtUtil 为玩家分配tonken实现登录持久化
+      - JwtUtil 为玩家分配token实现登录持久化
+    
+        
+    
   - matchingsystem 玩家匹配微服务
     - controller 开设匹配池，接受backend调用添加玩家并将匹配结果返还backend
+    
+    - service 业务实现
+    
+    - config SpringSecurity RestTemplate模块配置
+    
+      
+    
   - botrunningsystem 代码运行微服务
-    - controller 接受backend调用返回玩家Bot运行结果
+    - controller 仅接受backend的调用并向其返回玩家Bot运行结果
+    
+    - service 业务实现
+    
+    - utils 模拟AI工具
+    
+    - config SpringSecurity RestTemplate模块配置
+    
+      
 2. web.src 前端代码地址
   - compontents 存放复用资源快
     - ContentField.vue 卡片容器
@@ -102,20 +243,28 @@
   - router 路由
 3. README.md
 
-### 部分代码逻辑
 
-#### 1.小蛇运动
 
-​	小蛇由一串联通canvas画出的正方形构成，头尾为圆形，头部有眼睛作标识。继承自游戏基类，每秒刷新60次以达到动画效果。每次移动会向前推进头尾格
+## 8.部分代码逻辑
+
+#### 8.1.小蛇运动
+
+​	小蛇由一串联通的canvas画出的正方形构成，头尾为圆形，头部有眼睛作标识。继承自游戏基类，每秒刷新60次，每次清除之前图像再渲染新图像以达到动画效果。每次移动会向前推进头尾格
+
+**贪吃蛇生命周期流程图**
+
+![][snakeLifeCycle]
 
 ```javascript
 //游戏基类内函数
 const step= timestamp =>{//每秒执行60次
     for(let obj of AC_GAME_OBJESTS){
+        //如果没有初始化过则初始化
         if(!obj.has_called_start){
             obj.has_called_start=true;
             obj.start();//启动函数
         }
+        //否则更新
         else{
             obj.timedelta=timestamp-last_timestamp;
             obj.update();//更新函数
@@ -186,9 +335,15 @@ requestAnimationFrame(step);
     }
 ```
 
-#### 2.地图生成
 
-​	随机生成一个中心对称地图，并dfs判断两名玩家是否联通,直至生成联通地图向前端返回
+
+#### 8.2.地图生成
+
+​	为了防止玩家作弊，地图生成及操作合法性的检验均在后端进行。GameMap类初始化时会随机生成一个中心对称地图，并DFS判断两名玩家是否联通,直至生成联通地图向前端返回地图结果
+
+**地图生成流程图**
+
+![][mapGenerateFlowChart]
 
 ```java
     private boolean draw(){//画一次地图
@@ -239,7 +394,9 @@ requestAnimationFrame(step);
     }
 ```
 
-#### 3.回放录像
+
+
+#### 8.3.回放录像
 
 ​	回放录像集成在游戏类中，每次游戏会判断当前是回放还是正式赛来选择输入信息源,若是回放则解析回放操作序列作为输入
 
@@ -275,7 +432,9 @@ requestAnimationFrame(step);
     }
 ```
 
-#### 4.AI代码运行及AI逻辑
+
+
+#### 8.4.AI代码运行及AI逻辑
 
 1. 利用反射机制动态编译运行代码，模拟生产者消费者模型消息队列，添加代码后立即消耗
 
@@ -354,7 +513,9 @@ requestAnimationFrame(step);
        }
    ```
 
-#### 5.代码编辑区
+
+
+#### 8.5.代码编辑区
 
 集成**vue3-ace-editor**依赖
 
@@ -377,9 +538,11 @@ import ace from 'ace-builds';
 </script>
 ```
 
-#### 6.玩家匹配
 
-开匹配池每秒尝试匹配一次所有玩家，每个玩家有可最大可容忍天梯分差值，随时间推移最大可容忍差值会逐步扩大
+
+#### 8.6.玩家匹配
+
+​	Backend会将玩家id、AI id、玩家天梯分传给MatchingSystem,系统会将玩家加入匹配池并每秒尝试匹配一次所有玩家，每个玩家有可最大可容忍天梯分差值，随时间推移最大可容忍差值会逐步扩大。匹配过程会优先匹配加入早的玩家
 
 ```java
     private void matchPlayers(){
@@ -421,9 +584,11 @@ import ace from 'ace-builds';
     }
 ```
 
-#### 7.持久化登录
 
-​	玩家登录后为其分配token，存储用户本地，后续验证其token有效性
+
+#### 8.7.持久化登录
+
+​	配置jwt登录验证模块，玩家登录后为其分配token，存储用户本地，后续验证其token有效性
 
 ```javascript
 //前端记录token 函数存在state区
@@ -484,13 +649,13 @@ import ace from 'ace-builds';
 
 
 
-## 技术支持
+## 9.技术支持
 
-### 开发环境
+### 9.1开发工具
 
-​		**IDEA VSCode MySQL Git**
+​		**后端编译器：IDEA 		前端编译器：VSCode 		数据库：MySQL		版本管理：Git，TortoiseGit**
 
-### 项目依赖
+### 9.2项目依赖
 
 - 后端
 
@@ -525,53 +690,37 @@ import ace from 'ace-builds';
   | @popperjs/core  | 管理css格式      | 2.11.6 |
 
 
-### 数据库结构
 
-1. User表
-
-   | 列名     | 元素类型      | 备注                 |
-   | -------- | ------------- | -------------------- |
-   | id       | int           | 用户id               |
-   | username | varchar(100)  | 用户名               |
-   | password | varchar(100)  | 用户密码，密文       |
-   | photo    | varchar(1000) | 用户头像             |
-   | rating   | int           | 用户天梯分，默认1500 |
-
-2. Record表
-
-   | 列名        | 元素类型      | 备注           |
-   | ----------- | ------------- | -------------- |
-   | id          | int           | 对局编号       |
-   | a_id        | int           | a玩家id        |
-   | a_sx        | int           | a玩家起始x坐标 |
-   | a_sy        | int           | a玩家起始y坐标 |
-   | b_id        | int           | b玩家id        |
-   | b_sx        | int           | b玩家起始x坐标 |
-   | b_sy        | int           | b玩家起始y坐标 |
-   | a_steps     | varchar(1000) | a玩家操作序列  |
-   | b_steps     | varchar(1000) | b玩家操作序列  |
-   | map         | varchar(1000) | 游戏地图       |
-   | loser       | varchar(20)   | 败者           |
-   | create_time | datetime      | 对局时间       |
-
-3. Bot表
-
-   | 列名        | 元素类型       | 备注         |
-   | ----------- | -------------- | ------------ |
-   | id          | int            | Bot id       |
-   | user_id     | int            | 拥有者id     |
-   | title       | varchar(100)   | Bot标题      |
-   | description | varchar(300)   | Bot描述      |
-   | content     | varchar(10000) | Bot内容      |
-   | createtime  | datetime       | 创建时间     |
-   | modifytime  | datetime       | 最后修改时间 |
-
-   
-
-### 部署环境
+### 9.3部署环境
 
 CPU与内存：1核(vCPU) 2 GiB
 
 操作系统：Ubuntu  20.04 64位
 
 域名：https://app5356.acapp.acwing.com.cn/
+
+
+
+
+
+
+
+[index]: ./desgin/img/index.jpg
+[match]: ./desgin/img/match.jpg
+[win]: ./desgin/img/win.jpg
+[gameList]: ./desgin/img/gameList.jpg
+[rankList]: ./desgin/img/rankList.jpg
+[botList]: ./desgin/img/botList.jpg
+[editBot]: ./desgin/img/editBot.jpg
+[board]: ./desgin/img/board.jpg
+[login]: ./desgin/img/login.jpg
+[process1]: ./desgin/img/process1.jpg
+[UserDemandAnalysis]: ./desgin/img/UserDemandAnalysis.png
+[MatchingSystemDemandAnalysis]: ./desgin/img/MatchingSystemDemandAnalysis.png
+[BotRunningSystemDemandAnalysis]: ./desgin/img/BotRunningSystemDemandAnalysis.png
+[ER]: ./desgin/img/ER.png
+[dataRel]: ./desgin/img/dataRel.jpg
+[dataFlowDiagramtop]: ./desgin/img/dataFlowDiagramtop.png
+[dataFlowDiagram0]: ./desgin/img/dataFlowDiagram0.png
+[snakeLifeCycle]: ./desgin/img/snakeLifeCycle.png
+[mapGenerateFlowChart]: ./desgin/img/mapGenerateFlowChart.png

@@ -11,7 +11,7 @@ export default class Snake extends AcGameObject{
         this.r=info.r;
         this.c=info.c;
         this.cells=[new Cell(info.r,info.c)];//🐍身体 cell0蛇头
-        this.speed=3;//每秒走3格
+        this.speed=3;//每秒走3格，一步用333秒
 
         this.next_cell =null;
         //-1 0 1 2 3上右下左 
@@ -108,7 +108,6 @@ export default class Snake extends AcGameObject{
     }
 
     update(){
-        console.log(this.gamemap.store.state.pk.placeId,this.id);
         if(!this.gamemap.store.state.record.is_record&&this.gamemap.store.state.pk.placeId==this.id)
             this.updateWallcolor();
         if(this.status==="move"){//移动

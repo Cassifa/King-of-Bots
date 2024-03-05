@@ -125,7 +125,7 @@ public class WebSocketServer {
     }
 
     private void startMatching(Integer botId){
-        System.out.println("startMatching");
+//        System.out.println("startMatching");
         MultiValueMap<String,String> data=new LinkedMultiValueMap<>();
         data.add("user_id",this.user.getId().toString());
         data.add("rating",this.user.getRating().toString());
@@ -135,7 +135,7 @@ public class WebSocketServer {
     }
 
     private void stopMatching(){
-        System.out.println("stopMatching");
+//        System.out.println("stopMatching");
         MultiValueMap<String,String> data=new LinkedMultiValueMap<>();
         data.add("user_id",this.user.getId().toString());
         data.add("rating",this.user.getRating().toString());
@@ -155,7 +155,7 @@ public class WebSocketServer {
     @OnMessage
     public void onMessage(String message, Session session) {
         // 从Client接收消息
-        System.out.println("recived");
+//        System.out.println("recived");
         JSONObject data=JSONObject.parseObject(message);
         String event=data.getString("event");
         if("start-matching".equals(event)){

@@ -21,20 +21,19 @@ import java.io.IOException;
 
 @Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
+    //验证jwt token是否合法，如果验证成功，则将User信息注入上下文中
     @Autowired
     private UserMapper userMapper;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, @NotNull HttpServletResponse response,
+                                    @NotNull FilterChain filterChain) throws ServletException, IOException {
         String token = request.getHeader("Authorization");
-
         if (!StringUtils.hasText(token) || !token.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
-
         token = token.substring(7);
-
         String userid;
         try {
             Claims claims = JwtUtil.parseJWT(token);
@@ -42,19 +41,14 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
         User user = userMapper.selectById(Integer.parseInt(userid));
-
         if (user == null) {
             throw new RuntimeException("用户名未登录");
         }
-
         UserDetailsImpl loginUser = new UserDetailsImpl(user);
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginUser, null, null);
-
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-
         filterChain.doFilter(request, response);
     }
 }

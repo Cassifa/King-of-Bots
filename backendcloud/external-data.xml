@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+  <object-set>
+    <table path="kob.record">
+      <table path="kob.user" from="a_id" to="id"/>
+      <table path="kob.user" from="b_id" to="id"/>
+    </table>
+  </object-set>
+</data>
