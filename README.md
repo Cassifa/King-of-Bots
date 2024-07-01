@@ -2,6 +2,10 @@
 
 
 
+*注：此文档是King of Bots网页端及后端的说明文档，安卓端见：[Li Feifei / KOB_Android · GitLab )](https://git.acwing.com/Cassifa/KOBAndroid)*
+
+
+
 ## 1.概述
 
 ​		**由贪吃蛇游戏改编而来，两名玩家在线联机对战，玩家可以选择指派自己设计的AI参与对战，或亲自出马。同时支持玩家赛后查看比赛回放**
@@ -11,6 +15,24 @@
 ## 2.项目介绍
 
 ​		**前后端分离项目，前端由vue3搭配Bootstrap编写；后端为基于Maven的SpringCloud项目，由backend, matchingsystem, botrunningsystem 三个微服务组成，并集成了SpringSecurity, WebSocket, JsonWebToken, MyBatisPlus, FastJson, joor-java-8等服务。比赛为在线对战回合制1v1游戏，玩家操控一条蛇躲避障碍物并设法堵住对方以取得胜利。玩家可以上传由java编写的AI来代替自己出战并赢取天梯积分。支持赛后查看对局录像，并实时公布天梯排名。**
+
+
+
+### 2.1系统架构图
+
+![][systemArchitecture]
+
+### 2.2网络架构图
+
+​	项目由四个后端服务，前端通过接口去后端Backend交互，Backend可调用BotRunningSystem、MatchingSystem、SensitiveWord提供的微服务执行特定任务
+
+![][networdArchitectures]
+
+### 2.3系统模块图
+
+​	分为信息管理、游戏与回放、Bot管理、文本脱敏四大模块
+
+![][moduleDiagram]
 
 
 
@@ -724,3 +746,8 @@ CPU与内存：1核(vCPU) 2 GiB
 [dataFlowDiagram0]: ./desgin/img/dataFlowDiagram0.png
 [snakeLifeCycle]: ./desgin/img/snakeLifeCycle.png
 [mapGenerateFlowChart]: ./desgin/img/mapGenerateFlowChart.png
+
+[systemArchitecture]: ./desgin/img/systemArchitecture.png
+[networdArchitecture]: ./desgin/img/networdArchitecture.png
+[moduleDiagram]: ./desgin/img/moduleDiagram.png
+

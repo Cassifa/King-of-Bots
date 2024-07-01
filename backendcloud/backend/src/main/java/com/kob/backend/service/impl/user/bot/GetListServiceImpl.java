@@ -17,15 +17,16 @@ import java.util.List;
 public class GetListServiceImpl implements GetListService {
     @Autowired
     private BotMapper botMapper;
+
     @Override
     public List<Bot> getList() {
         UsernamePasswordAuthenticationToken authenticationToken =
                 (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl loginUser =(UserDetailsImpl) authenticationToken.getPrincipal();
-        User user=loginUser.getUser();
+        UserDetailsImpl loginUser = (UserDetailsImpl) authenticationToken.getPrincipal();
+        User user = loginUser.getUser();
 
-        QueryWrapper<Bot> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("user_id",user.getId());
+        QueryWrapper<Bot> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id", user.getId());
         return botMapper.selectList(queryWrapper);
     }
 }

@@ -65,7 +65,6 @@ public class WebSocketServer {
         System.out.println("connected");
         Integer userId= JwtAuthentication.getUserId(token);
         this.user=userMapper.selectById(userId);
-
         if(this.user!=null){
             users.put(userId,this);
         }else{
@@ -155,20 +154,25 @@ public class WebSocketServer {
     @OnMessage
     public void onMessage(String message, Session session) {
         // 从Client接收消息
-//        System.out.println("recived");
+        System.out.println("recived");
         JSONObject data=JSONObject.parseObject(message);
         String event=data.getString("event");
         if("start-matching".equals(event)){
+            System.out.println("bot_id");
+            System.out.println(data.getInteger("bot_id"));
             startMatching(data.getInteger("bot_id"));
         } else if ("stop-matching".equals(event)) {
+            System.out.println("stop-matching");
             stopMatching();
         }else if("move".equals(event)){
+            System.out.println(data.getInteger("direction"));
             move(data.getInteger("direction"));
         }
     }
 
     @OnError
     public void onError(Session session, Throwable error) {
+        System.out.println("错误");
         error.printStackTrace();
     }
 

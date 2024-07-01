@@ -49,7 +49,7 @@ export default class GameMap extends AcGameObject{
             const loser=this.store.state.record.record_loser;
             const a_step=this.store.state.record.a_step;//获取操作序列
             const b_step=this.store.state.record.b_step;
-            const mp=["上","右","下","左"];
+            // const mp=["上","右","下","左"];
             //每350ms命令蛇移动
             const interval_id=setInterval(()=>{
                 if(k>=a_step.length-1){//如果有死亡
@@ -63,12 +63,12 @@ export default class GameMap extends AcGameObject{
                     snake0.set_direction(parseInt(a_step[k]));
                     snake1.set_direction(parseInt(b_step[k]));
                     //红色右上1 蓝色左下0
-                    console.log("当前是第"+(k+1)+"回合：\n");
-                    console.log("红蛇走了："+mp[parseInt(a_step[k])]+", 蓝蛇走了："+mp[parseInt(b_step[k])]+"\n");
+                    // console.log("当前是第"+(k+1)+"回合：\n");
+                    // console.log("红蛇走了："+mp[parseInt(a_step[k])]+", 蓝蛇走了："+mp[parseInt(b_step[k])]+"\n");
                     k++;
                 }
 
-            },350)//
+            },350);
         }else{
             this.ctx.canvas.focus();//接受输入
             this.ctx.canvas.addEventListener("keydown",e=>{
@@ -114,18 +114,18 @@ export default class GameMap extends AcGameObject{
         }
     }
 
-    check_valid(cell){//判断移动是否合法
-        for(const wall of this.walls){
-            if(cell.r===wall.r&&cell.c===wall.c)return false;
-        }
-        for(let i of this.snakes){//临界情况
-            if(!i.check_tail_increasing()&&cell.r===i.cells[i.cells.length-1].r&&cell.c===i.cells[i.cells.length-1].c)return true;
-            for(let j of i.cells){
-                if(cell.r===j.r&&cell.c===j.c)return false;
-            }
-        }
-        return true;
-    }
+    // check_valid(cell){//判断移动是否合法
+    //     for(const wall of this.walls){
+    //         if(cell.r===wall.r&&cell.c===wall.c)return false;
+    //     }
+    //     for(let i of this.snakes){//临界情况
+    //         if(!i.check_tail_increasing()&&cell.r===i.cells[i.cells.length-1].r&&cell.c===i.cells[i.cells.length-1].c)return true;
+    //         for(let j of i.cells){
+    //             if(cell.r===j.r&&cell.c===j.c)return false;
+    //         }
+    //     }
+    //     return true;
+    // }
 
     update(){
         this.update_size();//更新地图大小

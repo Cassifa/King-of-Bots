@@ -82,6 +82,7 @@ export default class Snake extends AcGameObject{
         else{
             this.cells[0].x+=move_dis*dx/dis;
             this.cells[0].y+=move_dis*dy/dis;
+            console.log(move_dis*dx/dis)
         }
         if(!this.check_tail_increasing()){//不增长则尾巴缩短
             const k=this.cells.length;

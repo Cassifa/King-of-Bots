@@ -1,4 +1,4 @@
-package com.kob.backend.service.impl.ranklist;
+package com.kob.backend.service.impl.record.ranklist;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -19,18 +19,21 @@ public class GetRankListServiceImpl implements GetRankListService {
 
     @Override
     public JSONObject getList(Integer page) {
-        IPage<User> userIPage =new Page<>(page,10);
-        QueryWrapper<User> queryWrapper=new QueryWrapper<>();
+        IPage<User> userIPage = new Page<>(page, 10);
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("rating");
-        List<User> users=userMapper.selectPage(userIPage,queryWrapper).getRecords();
-        JSONObject resp =new JSONObject();
-        int rank=1;
-        for(User user:users){
-            user.setPassword("No."+ rank);
+        List<User> users;
+        if (page != -1)
+            users = userMapper.selectPage(userIPage, queryWrapper).getRecords();
+        else users = userMapper.selectList(null);
+        JSONObject resp = new JSONObject();
+        int rank = 1;
+        for (User user : users) {
+            user.setPassword("No." + rank);
             rank++;
         }
-        resp.put("users",users);
-        resp.put("users_count",userMapper.selectCount(null));
+        resp.put("users_count", userMapper.selectCount(null));
+        resp.put("users", users);
         return resp;
     }
 }
