@@ -2,7 +2,7 @@
 
 
 
-*注：此文档是King of Bots网页端及后端的说明文档，安卓端见：[Li Feifei / KOB_Android · GitLab )](https://git.acwing.com/Cassifa/KOBAndroid)*
+*注：此文档是King of Bots网页端及后端的说明文档，安卓端见：[Cassifa / KOB_Android · GitHub )](https://github.com/Cassifa/KOB_Android)*
 
 
 
